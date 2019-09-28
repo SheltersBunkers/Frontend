@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, Button} from 'react-native';
+import ShelterData from './ShelterData';
 
 
 
@@ -12,36 +13,48 @@ const Map = ({ history }) => {
     })
     const [ error, setError ] = useState(null)
     const [ test , setTest ] = useState('Here')
+    const [ showShelter, setShowShelter ] = useState(false)
 
     useEffect(() => {
         let geoOptions={
             enableHighAccuracy: true,
             timeOut: 20000,
-            maximumAge: 60 * 60 //since they would be moving would need to grab constantly so every 30 seconds.
+            maximumAge: 20 //since they would be moving would need to grab constantly so every 30 seconds.
         };
         setReady(false)
         setError(null)
         navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
     }, [])
 
+    callGeo = () => { //going to use to call ever so often to get location update.// escpecially if speed is greater than 1.
+        let geoOptions={
+            enableHighAccuracy: true,
+            timeOut: 20000,
+            maximumAge: 20 //since they would be moving would need to grab constantly so every 30 seconds.
+        }
+        setReady(false)
+        setError(null)
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
+    }
+
     geoSuccess = (position) => {
-        // console.log(coords.latitude)
         setReady(true)
-        setWhere({ lat: coords.latitude, lng: coords.longitude })
+        setWhere({ lat: position.coords.latitude, lng: position.coords.longitude })
+
     }
     geoFailure = (err) => {
-        setWhere({ lat: "50", lng: "50"})
         setError(true)
     }
 
+
     return (
         <View>
-            <Text>HI</Text>
-            <Text>{(where.lat) ? where.lat : 'HI'}</Text>
-            <Text>{where.lng}</Text>
-            <Text>{error}</Text>
             <Text>MAP</Text>
+            <Text>{where.lat}</Text>
+            <Text>{where.lng}</Text>
             <Button title="Home Page" onPress={() => history.push("/")} />
+            <Button onPress={ () => setShowShelter(!showShelter) } title="Show/Hide Shelter"/> 
+            {(showShelter) ? <ShelterData /> : null }
         </View>
     )
 }
