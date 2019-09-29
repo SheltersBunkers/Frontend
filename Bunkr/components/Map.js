@@ -50,16 +50,22 @@ const Map = ({ history }) => {
     return (
        
         <View> 
+        <Text>{where.lat}</Text>
+        <Text>{where.lng}</Text>
+        <Button onPress={() => history.push("/")} title="Go Back" />
         {(where.lat && where.lng) ?
             <MapView
                 style={styles.map}
                 initialRegion={{
-                latitude:50,
-                longitude: 50,
+                latitude: where.lat,
+                longitude: where.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
                 }}
             >
+            <Marker 
+                coordinate={{latitude: where.lat, longitude: where.lng}}
+                title="Your Location" />
            {locations.map(marker => (
                 <Marker
                     key={marker.id}
@@ -80,7 +86,8 @@ const Map = ({ history }) => {
 
 const styles = StyleSheet.create({
     map: {
-      flex: 1
+      width: 500,
+      height: 500
     }
   });
 
