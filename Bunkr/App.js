@@ -9,9 +9,11 @@ export default function App() {
   return (
     <NativeRouter>
       <View style={styles.container}>
+      <Text>Hello</Text>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/map" component={Map} />
+            
         </Switch>
       </View>
     </NativeRouter>
@@ -25,4 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  map: {
+    flex: 1
+  }
 });

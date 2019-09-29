@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text, Button} from 'react-native';
 import ShelterData from './ShelterData';
-
+import locations from './data'; //a few locations to map over.
+import MapView, { Marker } from 'react-native-maps';
 
 
 const Map = ({ history }) => {
-
-    const [ ready, setReady ] = useState(false)
+    const [ selectedShelter, setSelectedShelter ] = useState(null);
+    const [ ready, setReady ] = useState(false);
     const [ where, setWhere ] = useState({
         lat: null,
         lng: null
-    })
-    const [ error, setError ] = useState(null)
-    const [ test , setTest ] = useState('Here')
-    const [ showShelter, setShowShelter ] = useState(false)
+    });
+    const [ error, setError ] = useState(null);
+    const [ test , setTest ] = useState('Here');
+    const [ showShelter, setShowShelter ] = useState(false);
 
     useEffect(() => {
         let geoOptions={
@@ -45,18 +46,49 @@ const Map = ({ history }) => {
     geoFailure = (err) => {
         setError(true)
     }
-
-
+    
     return (
-        <View>
-            <Text>MAP</Text>
-            <Text>{where.lat}</Text>
-            <Text>{where.lng}</Text>
-            <Button title="Home Page" onPress={() => history.push("/")} />
-            <Button onPress={ () => setShowShelter(!showShelter) } title="Show/Hide Shelter"/> 
-            {(showShelter) ? <ShelterData /> : null }
+       
+        <View> 
+        {(where.lat && where.lng) ?
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                latitude:50,
+                longitude: 50,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+                }}
+            >
+           {locations.map(marker => (
+                <Marker
+                    key={marker.id}
+                    coordinate={{latitude: marker.lat, longitude: marker.lng}}
+                    title={marker.name}
+                /> 
+            ))} 
+                
+            </MapView> :
+            <Text>Bunkr</Text>
+        }
+            
         </View>
-    )
+           
+        
+    ) 
 }
 
+const styles = StyleSheet.create({
+    map: {
+      flex: 1
+    }
+  });
+
+
 export default Map;
+
+
+{/* <Marker
+  coordinate={marker.latlng}
+  image={require('../assets/pin.png')}
+/> */}  //to render with custom marker.
