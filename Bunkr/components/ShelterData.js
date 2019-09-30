@@ -2,17 +2,35 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import { gray } from 'ansi-colors';
 
+ 
+// id: 1,
+    
+// lat: 34.5433261,
+
+// lng: -77.43597869999999,
+
+// name: "Dixon Middle School",
+
+// street_num: "118",
+
+// road: "Ridge Field Avenue",
+
+// city: "Sneads Ferry",
+
+// state: "NC ",
+
+// zip_code: "28445"
 
 
-const ShelterData = () => {
+const ShelterData = (props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.bar}>Open</Text>
-            <Text style={styles.shelterName}>Valley Center Methodist Church</Text>
-            <Text style={styles.address}>560 N. Park St., Valley Center, KS</Text>
+            <Text style={styles.shelterName}>{props.shelter.name}</Text>
+            <Text style={styles.address}>{props.shelter.street_num} {props.shelter.road}, {props.shelter.city}, {props.shelter.state}</Text>
             <Text style={styles.distance}>2.5 miles away</Text>
             <Text style={styles.hairLineWidth}></Text>
-            <Text style={styles.telephoneNum}>337-555-3848</Text>
+            <Text style={styles.telephoneNum}>{(props.shelter.telephone) ? props.shelter.telephone : null }</Text>
             <Text style={styles.hairLineWidth}></Text>
         </View>
     )

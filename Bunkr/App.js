@@ -9,7 +9,6 @@ export default function App() {
   return (
     <NativeRouter>
       <View style={styles.container}>
-      <Text>Hello</Text>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/map" component={Map} />

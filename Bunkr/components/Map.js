@@ -13,14 +13,13 @@ const Map = ({ history }) => {
         lng: null
     });
     const [ error, setError ] = useState(null);
-    const [ test , setTest ] = useState('Here');
     const [ showShelter, setShowShelter ] = useState(false);
 
     useEffect(() => {
         let geoOptions={
             enableHighAccuracy: true,
             timeOut: 20000,
-            maximumAge: 20 //since they would be moving would need to grab constantly so every 30 seconds.
+            maximumAge: 20 
         };
         setReady(false)
         setError(null)
@@ -46,14 +45,17 @@ const Map = ({ history }) => {
     geoFailure = (err) => {
         setError(true)
     }
+    showIndividualShelter = (shelter) => {
+        setSelectedShelter(shelter);
+
+    }
     
     return (
        
-        <View> 
-        <Text>{where.lat}</Text>
-        <Text>{where.lng}</Text>
+        <View>
         <Button onPress={() => history.push("/")} title="Go Back" />
-        {(where.lat && where.lng) ?
+        {(selectedShelter) ? <ShelterData shelter={selectedShelter} /> :  
+        (where.lat && where.lng) ?
             <MapView
                 style={styles.map}
                 initialRegion={{
@@ -71,6 +73,7 @@ const Map = ({ history }) => {
                     key={marker.id}
                     coordinate={{latitude: marker.lat, longitude: marker.lng}}
                     title={marker.name}
+                    onPress={() => showIndividualShelter(marker) }
                 /> 
             ))} 
                 
@@ -86,8 +89,8 @@ const Map = ({ history }) => {
 
 const styles = StyleSheet.create({
     map: {
-      width: 500,
-      height: 500
+      flex: 3,
+      width: 1000
     }
   });
 
