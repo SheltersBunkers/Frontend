@@ -50,10 +50,11 @@ const Map = ({ history }) => {
 
     }
     
+    
     return (
        
         <View>
-        <Button onPress={() => history.push("/")} title="Go Back" />
+        {/* <Button onPress={() => history.push("/")} title="Go Back" /> */}
         {(selectedShelter) ? <ShelterData shelter={selectedShelter} /> :  
         (where.lat && where.lng) ?
             <MapView
