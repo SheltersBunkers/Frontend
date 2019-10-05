@@ -32,8 +32,8 @@ const ShelterData = (props) => {
                         initialRegion={{
                         latitude: props.shelter.lat,
                         longitude: props.shelter.lng,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
+                        latitudeDelta: .004,
+                        longitudeDelta: .004,
                         }}
                     >
                     <Marker 
@@ -68,7 +68,7 @@ const ShelterData = (props) => {
 
 const styles =  StyleSheet.create({
     map: {
-        height: 400,
+        height: 200,
         width: 400
     },
     container: {
