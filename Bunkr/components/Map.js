@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
 import ShelterData from './ShelterData';
 import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
@@ -76,9 +76,9 @@ const Map = ({ history }) => {
                     onPress={() => showIndividualShelter(marker) }
                 /> 
             ))} 
-                
-            </MapView> :
-            <Text>Bunkr</Text>
+            </MapView> 
+            :
+            <ActivityIndicator size="large" color="#0000ff" />
         }
             
         </View>
