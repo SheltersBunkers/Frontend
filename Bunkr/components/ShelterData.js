@@ -14,8 +14,11 @@ const ShelterData = ({ history, location }) => {
     return (
         <View>
          <View style={styles.top} >
-            <Ionicons name="close-0" size={30} onPress={() => history.push('/map')} style={styles.icon} />
-                <View style={styles.map} pointerEvents="none"> 
+            <View style={styles.flexing}>
+                <Ionicons name="md-arrow-back" size={40} onPress={() => history.push('/map')} style={styles.icon} />
+                <Ionicons name="md-close-circle-outline" size={40} onPress={() => history.push('/')} style={styles.icon2}/>
+            </View>
+            <View style={styles.map} pointerEvents="none"> 
                         <MapView
                                 style={styles.map}
                                 initialRegion={{
@@ -57,16 +60,29 @@ const ShelterData = ({ history, location }) => {
 }
 
 const styles =  StyleSheet.create({
+    flexing: {
+        flexDirection: 'row',
+        flex: 1
+    },
     top: {
         flex: 2
     },
     icon: {
         marginLeft: 30,
+        marginBottom: -50,
         marginTop: 50,
         zIndex: 10
     },
+    icon2: {
+        marginLeft: 30,
+        marginBottom: -50,
+        marginTop: 50,
+        zIndex: 10,
+        position: "absolute",
+        right: 20
+    },
     map: {
-        flex: 1
+        flex: 8
     },
     container: {
         flex: 3
