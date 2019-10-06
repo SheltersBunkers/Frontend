@@ -10,11 +10,9 @@ export default function App() {
   return (
     <NativeRouter>
       <View style={styles.container}>
-        <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/map" component={Map} />
-          <Route path="/shelter" component={ShelterData} />
-        </Switch>
+          <Route exact path="/map" component={Map} />
+          <Route exact path="/shelter" component={ShelterData} />
       </View>
     </NativeRouter>
   );

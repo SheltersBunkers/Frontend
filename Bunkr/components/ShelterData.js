@@ -5,15 +5,17 @@ import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
+import locations from './data';
 
 
+const ShelterData = ({ history, location }) => {
 
-const ShelterData = ({ history, shelter }) => {
-
+    const shelter = location.state;
     return (
-        <View><Ionicons name="md-snow" size={35} style={styles.icon} onPress={ () => history.push('/map') } />
-                <View style={styles.top} >
-                    <View style={styles.map} pointerEvents="none"> 
+        <View>
+         <View style={styles.top} >
+            <Ionicons name="close-0" size={30} onPress={() => history.push('/map')} style={styles.icon} />
+                <View style={styles.map} pointerEvents="none"> 
                         <MapView
                                 style={styles.map}
                                 initialRegion={{
@@ -23,7 +25,6 @@ const ShelterData = ({ history, shelter }) => {
                                 longitudeDelta: .004,
                                 }}
                             >
-                            
                             <Marker 
                                 coordinate={{latitude: shelter.lat, longitude: shelter.lng}}
                                 title={shelter.name} />
@@ -50,19 +51,18 @@ const ShelterData = ({ history, shelter }) => {
                 <Text style={styles.users}>kayla</Text><Text>9/26/19 7:10PM</Text>
                 <Text style={styles.comments}>This shelter is open! Bring snacks! And a phone charger!</Text>
                 
-            </View>
-    </View>
+            </View> 
+        </View>
     )
 }
 
 const styles =  StyleSheet.create({
     top: {
-        flex: 2,
-        backgroundColor: 'red'
+        flex: 2
     },
     icon: {
-        marginBottom: -100,
         marginLeft: 30,
+        marginTop: 50,
         zIndex: 10
     },
     map: {
