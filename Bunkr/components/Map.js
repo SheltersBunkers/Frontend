@@ -49,29 +49,12 @@ const Map = ({ history }) => {
         setSelectedShelter(shelter);
 
     }
-    // <ShelterData shelter={selectedShelter} />
-    // id: 1,
-    
-    // lat: 34.5433261,
-    
-    // lng: -77.43597869999999,
-    
-    // name: "Dixon Middle School",
-    
-    // street_num: "118",
-    
-    // road: "Ridge Field Avenue",
-    
-    // city: "Sneads Ferry",
-    
-    // state: "NC ",
-    
-    // zip_code: "28445"
+
     return (
        
         <View>
         {/* <Button onPress={() => history.push("/")} title="Go Back" /> */}
-        {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code }) :  
+        {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code, your_lat: where.lat, your_lng: where.lng }) :  
         (where.lat && where.lng) ?
             <MapView
                 style={styles.map}

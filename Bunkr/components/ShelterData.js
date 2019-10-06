@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
 import { gray } from 'ansi-colors';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import locations from './data';
-
+import { getDistance } from 'geolib';
 
 const ShelterData = ({ history, location }) => {
-
+    const [ distance, setDistance ] = useState(null)
     const shelter = location.state;
+
+    useEffect(() => {
+        setDistance(getDistance(
+            {latitude: shelter.lat, longitude: shelter.lng },
+            {latitude: shelter.your_lat, longitude: shelter.your_lng }
+        ) * 0.00062137)
+    }, [])
+
     return (
         <View>
          <View style={styles.top} >
@@ -19,26 +27,27 @@ const ShelterData = ({ history, location }) => {
                 <Ionicons name="md-close-circle-outline" size={40} onPress={() => history.push('/')} style={styles.icon2}/>
             </View>
             <View style={styles.map} pointerEvents="none"> 
-                        <MapView
-                                style={styles.map}
-                                initialRegion={{
-                                latitude: shelter.lat,
-                                longitude: shelter.lng,
-                                latitudeDelta: .004,
-                                longitudeDelta: .004,
-                                }}
-                            >
-                            <Marker 
-                                coordinate={{latitude: shelter.lat, longitude: shelter.lng}}
-                                title={shelter.name} />
-                        </MapView> 
-                    </View>
-                </View>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                    latitude: shelter.lat,
+                    longitude: shelter.lng,
+                    latitudeDelta: .004,
+                    longitudeDelta: .004,
+                    }}
+                    >
+                <Marker 
+                    coordinate={{latitude: shelter.lat, longitude: shelter.lng}}
+                    title={shelter.name} />
+                </MapView> 
+            </View>
+        </View>
+             
             <View style={styles.container}>
                 <Text style={styles.bar}>Open</Text>
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
-                <Text style={styles.distance}>2.5 miles away</Text>
+                 { (distance) ? <Text style={styles.distance}>  { distance } </Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                 <Text style={styles.hairLineWidth}></Text>
                 <Text style={styles.telephoneNum}>{(shelter.telephone) ? shelter.telephone : "No Phone Number" }</Text>
                 <Text style={styles.hairLineWidth}></Text>
