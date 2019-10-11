@@ -44,10 +44,10 @@ const ShelterData = ({ history, location }) => {
         </View>
              
             <View style={styles.container}>
-                <Text style={styles.bar}>Open</Text>
+                <Text style={styles.bar}></Text>
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
-                 { (distance) ? <Text style={styles.distance}>  { distance } </Text> : <ActivityIndicator size="small" color="#0000ff" /> }
+                 { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } </Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                 <Text style={styles.hairLineWidth}></Text>
                 <Text style={styles.telephoneNum}>{(shelter.telephone) ? shelter.telephone : "No Phone Number" }</Text>
                 <Text style={styles.hairLineWidth}></Text>
