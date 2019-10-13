@@ -75,6 +75,7 @@ const Map = ({ history }) => {
                     title={marker.name}
                     onPress={() => showIndividualShelter(marker) }
                 /> 
+                    
             ))} 
             </MapView> 
             :

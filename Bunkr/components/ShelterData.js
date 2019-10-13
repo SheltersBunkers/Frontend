@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput } from 'react-native';
 import { gray } from 'ansi-colors';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,8 +9,10 @@ import locations from './data';
 import { getDistance } from 'geolib';
 
 const ShelterData = ({ history, location }) => {
-    const [ distance, setDistance ] = useState(null)
+    const [ distance, setDistance ] = useState(null);
     const shelter = location.state;
+    const [ message, setMessage ] = useState('');
+    const [ user, setUser ] = useState(null)
 
     useEffect(() => {
         setDistance(getDistance(
@@ -18,6 +20,11 @@ const ShelterData = ({ history, location }) => {
             {latitude: shelter.your_lat, longitude: shelter.your_lng }
         ) * 0.00062137)
     }, [])
+    
+    const sendComment = () => {
+        //send to backend
+        setMessage('');
+    }
 
     return (
         <View>
@@ -44,14 +51,28 @@ const ShelterData = ({ history, location }) => {
         </View>
              
             <View style={styles.container}>
-                <Text style={styles.bar}></Text>
+                <Button title="Click to Get Directions" style={styles.bar} onPress={ () => history.push('/getdirections', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) } />
+
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
-                 { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } </Text> : <ActivityIndicator size="small" color="#0000ff" /> }
+                 { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } Miles</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                 <Text style={styles.hairLineWidth}></Text>
                 <Text style={styles.telephoneNum}>{(shelter.telephone) ? shelter.telephone : "No Phone Number" }</Text>
                 <Text style={styles.hairLineWidth}></Text>
+                {(user) ? <>
+                <Button title="Log in with Facebook to Comment" />
                 <Text style={styles.comments}>COMMENTS</Text>
+                </>: 
+                    <>
+                        <TextInput
+                            style={{height: 40}}
+                            placeholder="Insert Message here"
+                            onChange={(e) => setMessage(e.target.value)}
+                            value={message}
+                            /> 
+                        <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
+                        <Text style={styles.comments}>COMMENTS</Text>
+                    </>}
                 <View style={styles.flexing}>
                     <Text style={styles.users}>todd</Text>
                     <Text style={styles.date}>9/26/19 7:10PM</Text>
@@ -69,6 +90,9 @@ const ShelterData = ({ history, location }) => {
 }
 
 const styles =  StyleSheet.create({
+    submit: {
+        width: 200
+    },
     flexing: {
         flexDirection: 'row',
         flex: 1
@@ -102,7 +126,8 @@ const styles =  StyleSheet.create({
         height: 60,
         fontSize: 25,
         textAlign: "center",
-        paddingTop: 8
+        paddingTop: 8,
+        flex: 2
     },
     shelterName: {
         fontSize: 20,
