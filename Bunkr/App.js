@@ -5,14 +5,14 @@ import Map from './components/Map';
 import Home from './components/Home';
 import ShelterData from './components/ShelterData';
 import GetDirections from './components/GetDirections';
-// import  store  from './store';
-// import { Provider } from 'react-redux';
+import  store  from './store';
+import { Provider } from 'react-redux';
 
 
 
 export default function App() {
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
       <NativeRouter>
         <View style={styles.container}>
             <Route exact path="/" component={Home} />
@@ -21,7 +21,7 @@ export default function App() {
             <Route exact path="/getdirections" component={GetDirections} />
         </View>
       </NativeRouter>
-    // </Provider>
+    </Provider>
   );
 }
 
