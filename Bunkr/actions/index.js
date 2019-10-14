@@ -7,3 +7,7 @@ export const FETCHING_USER_DATA = "FETCHING_USER_DATA";
 export const FETCHING_COMMENTS = "FETCHING_COMMENTS ";
 
 
+
+export const get_user = () => dispatch => {
+    dispatch({ type: GET_USER_DATA })
+}

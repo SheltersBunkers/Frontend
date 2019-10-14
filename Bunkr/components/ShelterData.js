@@ -8,11 +8,15 @@ import { withRouter } from 'react-router-native';
 import locations from './data';
 import { getDistance } from 'geolib';
 
+import { useSelector, useDispatch }  from 'react-redux';
+
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
     const shelter = location.state;
     const [ message, setMessage ] = useState('');
-    const [ user, setUser ] = useState(null)
+    const [ user, setUser ] = useState(null);
+    // const dispatch = useDispatch();
+    // const users = useSelector( () => state.user);
 
     useEffect(() => {
         setDistance(getDistance(

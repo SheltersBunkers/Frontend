@@ -12,7 +12,7 @@ export default getData = (state = initialState, action) => {
         case GET_USER_DATA:
             return {
                 ...state,
-                user: action.payload,
+                user: 'new user',
                 fetchingUser: false
             }
         case FETCHING_USER_DATA: 
@@ -31,5 +31,7 @@ export default getData = (state = initialState, action) => {
                 ...state,
                 fetchingComments: true
             }
+        default:
+            return state
     }
 }
