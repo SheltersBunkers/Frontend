@@ -93,7 +93,7 @@ export const get_comments_by_id = (id) => {
 export const post_comment_to_shelter = async (id, message) => {
     dispatch({ type: POSTING })
 
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem('Bunkr_token');
     
     return axiosWithAuth(token)
         .post(`https://bunkr-up.herokuapp.com/comments/${id}`, message)
@@ -107,5 +107,3 @@ export const post_comment_to_shelter = async (id, message) => {
 
 
 
-// to save token 
-// await AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.');
