@@ -1,7 +1,10 @@
 import { 
-    FETCHING_USER_DATA, 
-    GET_USER_DATA_SUCCESS,
-    GET_USER_DATA_FAILURE,
+    LOGIN,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    REGISTERING,
+    REGISTERING_SUCCESS,
+    REGISTERING_FAILURE,
     FETCHING_COMMENTS_BY_SHELTER_ID,
     GET_COMMENTS_BY_SHELTER_ID_SUCCESS,
     GET_COMMENTS_BY_SHELTER_ID_FAILURE, 
@@ -16,30 +19,48 @@ import {
 const initialState = {
     user: null,
     comments: [],
-    fetchingUser: false,
+    loggingIn: false,
     fetchingComments: false,
     locations: [],
     fetchingLocations: false,
+    registering: false,
     posting: false
 }
 
 export default reducer = (state = initialState, action) => {
     switch(action.type){
-        case  FETCHING_USER_DATA:
+        case LOGIN:
             return {
                 ...state,
-                fetchingUser: true
+                loggingIn: true
             }
-        case GET_USER_DATA_SUCCESS:
+        case LOGIN_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
-                fetchingUser: false
+                loggingIn: false
             }
-        case FETCHING_USER_DATA_FAILURE: 
+        case LOGIN_FAILURE: 
             return  {
                 ...state,
-                fetchingUser: true
+                loggingIn: true
+            }
+        case REGISTERING:
+            return {
+                ...state,
+                registering: true
+            }
+        case REGISTERING_SUCCESS:
+            return {
+                ...state,
+                registering: false,
+                user: action.payload
+            }
+        case REGISTERING_FAILURE:
+            return {
+                ...state,
+                registering: false,
+                user: "There is an error registering"
             }
         case FETCHING_COMMMENTS_BY_SHELTER_ID:
             return {
