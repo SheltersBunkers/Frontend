@@ -62,7 +62,7 @@ export default reducer = (state = initialState, action) => {
                 registering: false,
                 user: "There is an error registering"
             }
-        case FETCHING_COMMMENTS_BY_SHELTER_ID:
+        case FETCHING_COMMENTS_BY_SHELTER_ID:
             return {
                 ...state,
                 fetchingComments: true

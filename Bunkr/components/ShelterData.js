@@ -55,7 +55,7 @@ const ShelterData = ({ history, location }) => {
         </View>
              
             <View style={styles.container}>
-                <Button title="Click to Get Directions" style={styles.bar} onPress={ () => history.push('/getdirections', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) } />
+                {/* <Button title="Click to Get Directions" style={styles.bar} onPress={ () => history.push('/getdirections', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) } /> */}
 
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
