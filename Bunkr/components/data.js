@@ -399,8 +399,26 @@ const locations = [
     
     zip_code: "63638"
     
+    },
+    {
+    id: 21,
+
+    lat: 37.791580,
+
+    lng: -122.402283,
+
+    name: "Lambda School",
+
+    street_num: 250,
+
+    road: "Montgomery Street",
+
+    city: "San Francisco",
+
+    state: "CA",
+
+    zip_code: "94104"
     }
-    
     ]
 
     export default locations;

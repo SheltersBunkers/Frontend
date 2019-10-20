@@ -14,9 +14,8 @@ const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
     const shelter = location.state;
     const [ message, setMessage ] = useState('');
-    const [ user, setUser ] = useState(null);
-    // const dispatch = useDispatch();
-    // const users = useSelector( () => state.user);
+    const dispatch = useDispatch();
+    const user = useSelector( state => state.user);
 
     useEffect(() => {
         setDistance(getDistance(
@@ -59,12 +58,12 @@ const ShelterData = ({ history, location }) => {
 
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
-                 { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } Miles</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
+                 { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles' : 'Mile' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                 <Text style={styles.hairLineWidth}></Text>
                 <Text style={styles.telephoneNum}>{(shelter.telephone) ? shelter.telephone : "No Phone Number" }</Text>
                 <Text style={styles.hairLineWidth}></Text>
-                {(user) ? <>
-                <Button title="Log in with Facebook to Comment" />
+                {(!user) ? <>
+                <Button title="Log in or Register to Comment" />
                 <Text style={styles.comments}>COMMENTS</Text>
                 </>: 
                     <>
@@ -77,16 +76,11 @@ const ShelterData = ({ history, location }) => {
                         <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
                         <Text style={styles.comments}>COMMENTS</Text>
                     </>}
-                <View style={styles.flexing}>
-                    <Text style={styles.users}>todd</Text>
-                    <Text style={styles.date}>9/26/19 7:10PM</Text>
-                </View>
                 
-                <Text style={styles.comments}>This shelter is open!</Text>
-                <Text style={styles.users}>chase</Text><Text>9/26/19 7:10PM</Text>
-                <Text style={styles.comments}>This shelter is open!</Text>
-                <Text style={styles.users}>kayla</Text><Text>9/26/19 7:10PM</Text>
-                <Text style={styles.comments}>This shelter is open! Bring snacks! And a phone charger!</Text>
+                    <Text>Todd</Text>
+                    <Text>9/26/19 7:10PM</Text>
+                    <Text>This shelter is open</Text>
+                
                 
             </View> 
         </View>
@@ -98,8 +92,7 @@ const styles =  StyleSheet.create({
         width: 200
     },
     flexing: {
-        flexDirection: 'row',
-        flex: 1
+        flexDirection: 'row'
     },
     top: {
         flex: 2
@@ -161,24 +154,6 @@ const styles =  StyleSheet.create({
         marginLeft: 20,
         marginTop: 10,
         marginBottom: 10
-    },
-    users: {
-        color: "gray",
-        fontSize: 16,
-        marginLeft: 10,
-        marginRight: 10
-    },
-    date: {
-        color: "gray",
-        fontSize: 16,
-        textAlign: "right",
-        position: "absolute",
-        right: 10
-    },
-    comments: {
-        fontSize: 20,
-        marginLeft: 10,
-        marginRight: 10,
     },
     flexing: {
         flex: 1,

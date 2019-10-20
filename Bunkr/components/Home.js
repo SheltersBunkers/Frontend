@@ -9,29 +9,26 @@ const Home = ({ history }) => {
         <View style={{width: '100%', height: '100%'}}>
             <ImageBackground source={tornado} style={{width: '110%', height: '110%'}}>
                 <View style={styles.top}>
-                    <Text style={styles.company}>Dorthy's</Text> 
-                    <Text style={styles.company1}>Bunkr</Text>
+                    
                 </View>
-                {/* <Button title="Map" onPress={() => history.push("/map")}/> */}
+                <Button title="Map" onPress={() => history.push("/map")}/>
                 
-                <Text></Text>
+                <Text style={styles.cred}>Photo: Nikolas Noonan</Text>
             </ImageBackground>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    company: {
-        fontSize: 80,
-    },
-    company1: {
-        fontSize: 80,
-        marginLeft: 20,
-        marginTop: -30
-    },
+    
     top: {
-        flex: 3,
+        flex: 6,
         marginTop: 70
+    },
+    cred: {
+        flex:1,
+        fontSize: 15,
+        color: "white"
     }
 
 })
