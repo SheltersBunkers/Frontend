@@ -1,63 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView } from 'react-native';
 import { login, register } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
+import { Formik } from 'formik';
+import { styles } from 'ansi-colors';
+import * as yup from 'yup';
 
-const Login = () => {
-    const [ toggle, setToggle ] = useState(false);
-    const [ username, setUsername ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
-    
 
-    return (
-        <View style={styles.page}>
-        { (toggle) ? 
-        <>
-            <Text>Register</Text>
-            <TextInput
-                            style={{height: 40}}
-                            placeholder="Insert Message here"
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
-                            /> 
-            <TextInput
-                            style={{height: 40}}
-                            placeholder="Insert Message here"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            /> 
-            <TextInput
-                            style={{height: 40}}
-                            placeholder="Insert Message here"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            /> 
-        </> : 
-        <>
-            <Text>Login</Text>
-            <TextInput
-                            style={{height: 40}}
-                            placeholder="Insert Message here"
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
-                            /> 
-            <TextInput
-                            style={{height: 40}}
-                            placeholder="Insert Message here"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            /> 
-        </> }
-        </View>
-    )
-};
-
-const styles = StyleSheet.create({
-    page: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: '#96CDFF'
-    }
+const validationSchema = yup.object().shape({
+    username: yup.string().required('Username is a required field'),
+    email: yup.string().required('Email is a required field').email(),
+    password: yup.string().required('Password').min(6, 'Minimum 6 characters').max(20, 'Maximum 20 characters')
 })
 
+const Register = () => {
+    <SafeAReaView style={{marginTop: 90}}>
+        <Formik iniitalValue={{username: '', email: '', password: ''}} onSubmit={(values, actions) => } validationSchema={validationSchema}>
+            {formikProps => (
+                <>
+                <TextInput value={username} placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')}/>
+                <Text style={styles.alert}>{formikProps.errors.username}</Text>
+                <TextInput value={username} placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')}/>
+                <Text style={styles.alert}>{formikProps.errors.email}</Text>
+                <TextInput value={password} palceholder="Password" style={style.input} onChangeText={formikProps.handleChange('password')} />
+                <Text style={styles.alert}>{formikProps.errors.password}</Text>
+                
+                {formikProps.isSubmitting ? 
+                    <ActivityIndicator /> : 
+                    <Button title="Submit" onPress={formikProps.handSubmit} /> }
+                </>
+            )}
+        </Formik>
+    </SafeAReaView>
+
+};
+
+const style = StyleSheet.create({
+    input: {
+        borderWidth: 1, borderColor: 'black', padding: 10, marginBottom: 5
+    }
+    alert: {
+        color: red
+    }
+})
