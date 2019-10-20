@@ -4,7 +4,7 @@ import { NativeRouter, Switch, Route } from 'react-router-native';
 import Map from './components/Map';
 import Home from './components/Home';
 import ShelterData from './components/ShelterData';
-import Login from './components/Login';
+import Register from './components/Register';
 import GetDirections from './components/GetDirections';
 import  store  from './store';
 import { Provider } from 'react-redux';
@@ -17,7 +17,7 @@ export default function App() {
       <NativeRouter>
         <View style={styles.container}>
             {/* <Route exact path="/" component={Home} /> */}
-            <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Register} />
             <Route exact path="/map" component={Map} />
             <Route exact path="/shelter" component={ShelterData} />
             <Route exact path="/getdirections" component={GetDirections} />

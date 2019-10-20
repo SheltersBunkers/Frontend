@@ -3,7 +3,6 @@ import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaVi
 import { login, register } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
-import { styles } from 'ansi-colors';
 import * as yup from 'yup';
 
 
@@ -14,15 +13,23 @@ const validationSchema = yup.object().shape({
 })
 
 const Register = () => {
-    <SafeAReaView style={{marginTop: 90}}>
-        <Formik iniitalValue={{username: '', email: '', password: ''}} onSubmit={(values, actions) => } validationSchema={validationSchema}>
+    return (
+    <SafeAreaView style={styles.safe}>
+        <Formik initialValue={{username: '', email: '', password: ''}}  
+        onSubmit={(values, actions) => {
+            alert.stringfiy(values);
+            setTimeout(() => {
+                actions.setSubmitting(false);
+            }, 1000)
+        }}
+        validationSchema={validationSchema}>
             {formikProps => (
                 <>
-                <TextInput value={username} placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')}/>
+                <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')}/>
                 <Text style={styles.alert}>{formikProps.errors.username}</Text>
-                <TextInput value={username} placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')}/>
+                <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')}/>
                 <Text style={styles.alert}>{formikProps.errors.email}</Text>
-                <TextInput value={password} palceholder="Password" style={style.input} onChangeText={formikProps.handleChange('password')} />
+                <TextInput type="password" palceholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} />
                 <Text style={styles.alert}>{formikProps.errors.password}</Text>
                 
                 {formikProps.isSubmitting ? 
@@ -31,15 +38,22 @@ const Register = () => {
                 </>
             )}
         </Formik>
-    </SafeAReaView>
-
+    </SafeAreaView>
+    )
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
+    safe: {
+        marginTop: 30
+    },
     input: {
-        borderWidth: 1, borderColor: 'black', padding: 10, marginBottom: 5
-    }
+        borderWidth: 1, borderColor: 'black', padding: 10, marginHorizontal: 30, marginVertical: 5,
+        width: 250, borderRadius: 5
+    },
     alert: {
-        color: red
+        color: 'red'
     }
 })
+
+
+export default Register;
