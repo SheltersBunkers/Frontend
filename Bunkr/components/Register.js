@@ -29,12 +29,12 @@ const Register = () => {
                 <Text style={styles.alert}>{formikProps.errors.username}</Text>
                 <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')}/>
                 <Text style={styles.alert}>{formikProps.errors.email}</Text>
-                <TextInput type="password" palceholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} />
+                <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} />
                 <Text style={styles.alert}>{formikProps.errors.password}</Text>
                 
                 {formikProps.isSubmitting ? 
                     <ActivityIndicator /> : 
-                    <Button title="Submit" onPress={formikProps.handSubmit} /> }
+                    <Button title="Submit" onPress={formikProps.handSubmit} style={styles.button}/> }
                 </>
             )}
         </Formik>
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
     },
     alert: {
         color: 'red'
+    },
+    button: {
+        width: 250, height: 160
     }
 })
 
