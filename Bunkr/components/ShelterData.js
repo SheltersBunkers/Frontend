@@ -7,7 +7,7 @@ import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import locations from './data';
 import { getDistance } from 'geolib';
-
+import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 
 const ShelterData = ({ history, location }) => {
@@ -16,16 +16,19 @@ const ShelterData = ({ history, location }) => {
     const [ message, setMessage ] = useState('');
     const dispatch = useDispatch();
     const user = useSelector( state => state.user);
+    const shelterComments = useSelector( state => state.comments );
+
 
     useEffect(() => {
         setDistance(getDistance(
             {latitude: shelter.lat, longitude: shelter.lng },
             {latitude: shelter.your_lat, longitude: shelter.your_lng }
         ) * 0.00062137)
+
     }, [])
     
-    const sendComment = () => {
-        //send to backend
+    sendComment = () => {
+        dispatch(post_comment_to_shelter(shelter.id, message));
         setMessage('');
     }
 
@@ -54,8 +57,6 @@ const ShelterData = ({ history, location }) => {
         </View>
              
             <View style={styles.container}>
-                {/* <Button title="Click to Get Directions" style={styles.bar} onPress={ () => history.push('/getdirections', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) } /> */}
-
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
                  { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles' : 'Mile' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
@@ -76,18 +77,20 @@ const ShelterData = ({ history, location }) => {
                         <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
                         <Text style={styles.comments}>COMMENTS</Text>
                     </>}
-                
-                    <Text>Todd</Text>
-                    <Text>9/26/19 7:10PM</Text>
-                    <Text>This shelter is open</Text>
-                
-                
+                <View style={styles.co}>
+                    {shelterComments.map(comment => {
+                        return <Text>{comment}</Text>
+                    })}
+                </View>
             </View> 
         </View>
     )
 }
 
 const styles =  StyleSheet.create({
+    co: {
+        flex: 4
+    },
     submit: {
         width: 200
     },
