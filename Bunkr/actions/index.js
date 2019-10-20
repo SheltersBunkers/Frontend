@@ -65,17 +65,6 @@ export const get_locations = () => {
         })
 }
 
-export const get_locations_by_id = (id) => {
-    dispatch({ type: FETCHING_LOCATIONS })
-
-    axios.get(`https://bunkr-up.herokuapp.com/shelters/${id}`)
-        .then(res => {
-            dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
-        })
-        .catch(err => {
-            dispatch({ type: })
-        })
-}
 
 export const get_comments_by_id = (id) => {
     dispatch({ type: FETCHING_COMMENTS_BY_SHELTER_ID })
@@ -88,7 +77,6 @@ export const get_comments_by_id = (id) => {
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_FAILURE, payload: err })
         })
 }
-
 
 export const post_comment_to_shelter = async (id, message) => {
     dispatch({ type: POSTING })
