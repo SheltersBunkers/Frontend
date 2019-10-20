@@ -17,7 +17,7 @@ import {
 } from '../actions/index.js';
 
 const initialState = {
-    user: null,
+    user: 'Todd',
     comments: [],
     loggingIn: false,
     fetchingComments: false,
