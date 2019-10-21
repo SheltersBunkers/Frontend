@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Link } from 'react-router';
-import { login, register } from '../actions';
+import { login } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -12,17 +12,15 @@ const validationSchema = yup.object().shape({
 })
 
 const Login = ({ history }) => {
+    const dispatch = useDispatch();
+
+
     return (
         <View style={styles.page}>
         <Text style={styles.reg}>DORTHY'S BUNKR</Text>
         <SafeAreaView style={styles.safe}>
             <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
-            onSubmit={(values, actions) => {
-                alert.stringfiy(values);
-                setTimeout(() => {
-                    actions.setSubmitting(false);
-                }, 1000)
-            }}
+            onSubmit={(values, actions) => { dispatch(login(history, values))}}
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>

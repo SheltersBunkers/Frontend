@@ -9,15 +9,17 @@ import locations from './data';
 import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
+import {AsyncStorage} from 'react-native';
+
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
     const shelter = location.state;
-    const [ message, setMessage ] = useState('');
+    const [ message, setMessage ] = useState('HI');
     const dispatch = useDispatch();
     const user = useSelector( state => state.user);
     const shelterComments = useSelector( state => state.comments );
-
+    const failed = useSelector( state => state.postFailed )
 
     useEffect(() => {
         setDistance(getDistance(
@@ -27,8 +29,14 @@ const ShelterData = ({ history, location }) => {
 
     }, [])
     
+    useEffect(() =>{
+        dispatch(get_comments_by_id(shelter.id))
+    }, [shelterComments, failed]);
+
+
+
     sendComment = () => {
-        dispatch(post_comment_to_shelter(shelter.id, message));
+        dispatch(post_comment_to_shelter(shelter.id, message, user.id));
         setMessage('');
     }
 
@@ -64,14 +72,14 @@ const ShelterData = ({ history, location }) => {
                 <Text style={styles.telephoneNum}>{(shelter.telephone) ? shelter.telephone : "No Phone Number" }</Text>
                 <Text style={styles.hairLineWidth}></Text>
                 {(!user) ? <>
-                <Button title="Log in or Register to Comment" />
+                <Button title="Log in or Register to Comment" onPress={() => history.push('/login')} />
                 <Text style={styles.comments}>COMMENTS</Text>
                 </>: 
                     <>
                         <TextInput
                             style={{height: 40}}
                             placeholder="Insert Message here"
-                            onChange={(e) => setMessage(e.target.value)}
+                            onChangeText={(text) => setMessage(text)}
                             value={message}
                             /> 
                         <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
@@ -79,7 +87,7 @@ const ShelterData = ({ history, location }) => {
                     </>}
                 <View style={styles.co}>
                     {shelterComments.map(comment => {
-                        return <Text>{comment}</Text>
+                        return <Text>{comment.comment}</Text>
                     })}
                 </View>
             </View> 

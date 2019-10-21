@@ -1,7 +1,7 @@
 const locations = [
     {
     
-    id: 1,
+    id: 0,
     
     lat: 34.5433261,
     
@@ -418,6 +418,24 @@ const locations = [
     state: "CA",
 
     zip_code: "94104"
+    }, {
+        id: 1, 
+        
+        lat: 39.390041,
+
+        lng:  -94.585075,
+
+        name: "Smithville R-II", 
+
+        street_num: "645", 
+        
+        road: "South Commercial Avenue", 
+
+        city: "Smithville", 
+
+        stateAbbrev: "MO", 
+
+        zip_code: "64089"
     }
     ]
 

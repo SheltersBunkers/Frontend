@@ -27,7 +27,7 @@ export const POST_TO_SHELTER_SUCCESS = "POST_TO_SHELTER_SUCCESS";
 export const POST_TO_SHELTER_FAILURE = "POST_TO_SHELTER_FAILURE";
 
 
-export const login = (user) => dispatch => {
+export const login = (history, user) => dispatch => {
     dispatch({ type: LOGIN })
 
     axios.post('https://bunkr-up.herokuapp.com/login', user)
@@ -35,6 +35,7 @@ export const login = (user) => dispatch => {
         AsyncStorage.setItem('Bunkr_token', res.data.token);
         dispatch({ type: LOGIN_SUCCESS, payload: res.data })
     })
+    .then(res => history.push('/map'))
     .catch(err => {
         dispatch({ type: LOGIN_FAILURE, payload: err })
     })
@@ -54,7 +55,7 @@ export const register = (history, user) => dispatch => {
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
         
     })
-    .then(res => history.push('/'))
+    .then(res => history.push('/map'))
     .catch(err => {
         dispatch({ type: REGISTERING_FAILURE, payload: err })
     })
@@ -85,18 +86,24 @@ export const get_comments_by_id = (id) => dispatch => {
         })
 }
 
-export const post_comment_to_shelter = (id, message) => dispatch => {
+export const post_comment_to_shelter = (id, message, userId) => dispatch => {
     dispatch({ type: POSTING })
+    let token;
+    token = AsyncStorage.getItem('Bunkr_token');
 
-    const token = AsyncStorage.getItem('Bunkr_token');
-    
+    const messageObj = {
+        comment: message,
+        user_id: userId,
+        shelter_id: id
+    }
+
     return axiosWithAuth(token)
-        .post(`https://bunkr-up.herokuapp.com/comments/${id}`, message)
+        .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
         .then(res => {
             dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
         })
         .catch(err => {
-            dispatch({ type: POST_TO_SHELTER_FAILURE, payload: err })
+            dispatch({ type: POST_TO_SHELTER_FAILURE, payload: token })
         })
 }
 
