@@ -12,7 +12,8 @@ const Home = ({ history }) => {
                     
                 </View>
                 <Button title="Map" onPress={() => history.push("/map")}/>
-                
+                <Button title="Login" onPress={() => history.push("/login")}/>
+                <Button title="Register" onPress={() => history.push("/register")}/>
                 <Text style={styles.cred}>Photo: Nikolas Noonan</Text>
             </ImageBackground>
         </View>

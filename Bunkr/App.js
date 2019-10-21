@@ -6,6 +6,7 @@ import Home from './components/Home';
 import ShelterData from './components/ShelterData';
 import Register from './components/Register';
 import GetDirections from './components/GetDirections';
+import Login from './components/Login';
 import  store  from './store';
 import { Provider } from 'react-redux';
 
@@ -16,8 +17,9 @@ export default function App() {
     <Provider store={store}>
       <NativeRouter>
         <View style={styles.container}>
-            {/* <Route exact path="/" component={Home} /> */}
-            <Route exact path="/" component={Register} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/register" component={Register} />
+            <Route path ="/login" component={Login} />
             <Route exact path="/map" component={Map} />
             <Route exact path="/shelter" component={ShelterData} />
             <Route exact path="/getdirections" component={GetDirections} />

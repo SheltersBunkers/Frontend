@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Link } from 'react-router';
 import { login, register } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
@@ -15,10 +16,11 @@ const validationSchema = yup.object().shape({
     })
 })
 
-const Register = () => {
+const Register = ({ history }) => {
     return (
     <View style={styles.page}>
-    <Text style={styles.reg}>Register</Text>
+    <Text style={styles.reg}>DORTHY'S BUNKR</Text>
+    <Text style={{fontSize: 20, textAlign: "center"}}>REGISTERATION</Text>
     <SafeAreaView style={styles.safe}>
         <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
         onSubmit={(values, actions) => {
@@ -31,38 +33,49 @@ const Register = () => {
             {formikProps => (
                 <>
                 <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} autoFocus />
-                <Text style={styles.alert}>{formikProps.errors.username}</Text>
+                <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
                 <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")} autoFocus />
-                <Text style={styles.alert}>{formikProps.errors.email}</Text>
+                <Text style={styles.alert}>{formikProps.touched.email && formikProps.errors.email}</Text>
                 <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} autoFocus />
-                <Text style={styles.alert}>{formikProps.errors.password}</Text>
+                <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
                 <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={formikProps.handleChange('verifyPassword')} secureTextEntry onBlur={formikProps.handleBlur("verifyPassword")} autoFocus />
-                <Text style={styles.alert}>{formikProps.errors.verifyPassword}</Text>
+                <Text style={styles.alert}>{formikProps.touched.verifyPassword &&  formikProps.errors.verifyPassword}</Text>
                 {formikProps.isSubmitting ? 
                     <ActivityIndicator /> : 
-                    <Button title="Submit" onPress={formikProps.handleSubmit} style={styles.button} /> }
+                    <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>SIGN UP</Text></TouchableOpacity>}
                 </>
+                
             )}
         </Formik>
+            <View style={{flexDirection: "row", marginTop: 30}}>
+                <Text>Already registered?</Text> 
+                <TouchableOpacity onPress={() => history.push('/login')} >
+                    <Text> Login Here!</Text>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
+                    <Text style={styles.close}>Click here to go to home page!</Text>
+            </TouchableOpacity>
     </SafeAreaView>
     </View>
     )
 };
 
+
 const styles = StyleSheet.create({
     reg: {
-        fontSize: 30,
+        fontSize: 20,
         color: "black",
         textAlign: "center",
-        marginTop: "30%",
-        color: "#FF1053"
+        marginTop: "10%",
+        color: "#66C7F4",
+        fontWeight: "bold"
     
     },
     page: {
         width: "100%",
         height: "100%",
-        // backgroundColor: "#C1CAD6"
-        backgroundColor: "black"
+        backgroundColor: "#6C6EA0"
     },
     safe: {
         alignItems: "center",
@@ -71,7 +84,9 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         paddingBottom: 40,
         marginLeft: 30,
-        marginRight: 30
+        marginRight: 30,
+        borderColor: "black",
+        borderWidth: 3
     },
     input: {
         borderWidth: 1, 
@@ -85,12 +100,28 @@ const styles = StyleSheet.create({
     alert: {
         color: "#FF1053"
     },
-    button: {
-        width: 250, 
-        height: 160,
-        color: "green",
+    buttons: {
+        width: 120, 
+        height: 80,
+        fontSize: 20
+    },
+    madeButtons: {
+        marginTop: 10,
+        width: 200,
+        height: 60,
+        borderWidth: 1,
+        borderColor: "black",
+        textAlign: "center",
+        borderRadius: 10,
+        backgroundColor: "#C1CAD6"
+    },
+    center: {
+        textAlign: "center",
         fontSize: 20,
-        marginTop: 10
+        paddingTop: 15
+    },
+    goHome: {
+        marginTop: 50
     }
 })
 
