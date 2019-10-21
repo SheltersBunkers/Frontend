@@ -1,6 +1,6 @@
 import { axiosWithAuth } from "../utls/axiosWithAuth";
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN";
@@ -40,14 +40,21 @@ export const login = (user) => dispatch => {
     })
 }
 
-export const register = (user) => dispatch => {
+export const register = (history, user) => dispatch => {
     dispatch({ type: REGISTERING })
 
-    axios.post('https://bunkr-up.herokuapp.com/login/register')
+    let clean = {
+        username: user.username,
+        password: user.password,
+        email: user.email
+    }
+    axios.post('https://bunkr-up.herokuapp.com/login/register', clean)
     .then(res => {
         AsyncStorage.setItem('Bunkr_token', res.data.token);
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
+        
     })
+    .then(res => history.push('/'))
     .catch(err => {
         dispatch({ type: REGISTERING_FAILURE, payload: err })
     })

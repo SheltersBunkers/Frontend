@@ -17,18 +17,15 @@ const validationSchema = yup.object().shape({
 })
 
 const Register = ({ history }) => {
+    const dispatch = useDispatch();
+
     return (
     <View style={styles.page}>
     <Text style={styles.reg}>DORTHY'S BUNKR</Text>
     <Text style={{fontSize: 20, textAlign: "center"}}>REGISTERATION</Text>
     <SafeAreaView style={styles.safe}>
         <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
-        onSubmit={(values, actions) => {
-            alert.stringfiy(values);
-            setTimeout(() => {
-                actions.setSubmitting(false);
-            }, 1000)
-        }}
+        onSubmit={(values, actions) => dispatch(register(history, values))}
         validationSchema={validationSchema}>
             {formikProps => (
                 <>
