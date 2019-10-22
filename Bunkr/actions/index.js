@@ -3,8 +3,8 @@ import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 
 export const LOGIN = "LOGIN";
-export const LOGIN_SUCCESS = "LOGIN";
-export const LOGIN_FAILURE = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const REGISTERING = "REGISTERING";
 export const REGISTERING_SUCCESS = "REGISTERING_SUCCESS";
@@ -35,7 +35,6 @@ export const login = (history, user) => dispatch => {
         saved = async () => {
             try {
                 await AsyncStorage.setItem('Bunkr_token', res.data.token);
-                console.log('saved')
             } catch (error){
                 console.log('failed to save token')
             }
@@ -45,7 +44,8 @@ export const login = (history, user) => dispatch => {
     })
     .then(res => history.push('/map'))
     .catch(err => {
-        dispatch({ type: LOGIN_FAILURE, payload: err })
+        console.log('Failed here in login')
+        dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
 

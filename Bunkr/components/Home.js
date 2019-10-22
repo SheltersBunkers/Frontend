@@ -23,16 +23,16 @@ const Home = ({ history }) => {
              </View> 
     
                 <View style={styles.bottom}>
-                    <View style={{marginBottom: 15}}>
+                    <View style={{marginBottom: 20}}>
                         <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Login</Text></TouchableOpacity>
                     </View>
-                    <View style={{marginBottom: 15}}>
+                    <View style={{marginBottom: 20}}>
                         <TouchableOpacity title="Register" onPress={() => history.push("/register")} ><Text style={styles.reg}>Register</Text></TouchableOpacity>
                     </View>
-                    <View style={{marginBottom: 15}}>
+                    <View style={{marginBottom: 20}}>
                         <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Shelter Feedback</Text></TouchableOpacity>
                     </View>
-                    <View style={{marginBottom: 15}}>
+                    <View style={{marginBottom: 20}}>
                         <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
                     </View>
                 </View>
@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     log: {
         color: "#3366CC",
         textAlign: "center",
-        fontSize: 15,
-        marginBottom: 10
+        fontSize: 15
     },
     bottom: {
         flex: 1

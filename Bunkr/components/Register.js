@@ -18,7 +18,8 @@ const validationSchema = yup.object().shape({
 
 const Register = ({ history }) => {
     const dispatch = useDispatch();
-
+    const registering = useSelector(state => state.registering);
+    const regFailure = useSelector(state => state.regFailure)
     return (
     <View style={styles.page}>
     <Text style={styles.reg}>DORTHY'S BUNKR</Text>
@@ -29,6 +30,7 @@ const Register = ({ history }) => {
         validationSchema={validationSchema}>
             {formikProps => (
                 <>
+                { regFailure ? <Text>{regFailure}</Text> : null }
                 <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} />
                 <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
                 <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")}  />
@@ -37,7 +39,7 @@ const Register = ({ history }) => {
                 <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
                 <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={formikProps.handleChange('verifyPassword')} secureTextEntry onBlur={formikProps.handleBlur("verifyPassword")}  />
                 <Text style={styles.alert}>{formikProps.touched.verifyPassword &&  formikProps.errors.verifyPassword}</Text>
-                {formikProps.isSubmitting ? 
+                {registering ? 
                     <ActivityIndicator /> : 
                     <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>SIGN UP</Text></TouchableOpacity>}
                 </>

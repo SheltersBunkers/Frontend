@@ -9,7 +9,8 @@ import GetDirections from './components/GetDirections';
 import Login from './components/Login';
 import  store  from './store';
 import { Provider } from 'react-redux';
-
+import ShelterFeedback from './components/ShelterFeedback';
+import Disclaimer from './components/Disclaimer';
 
 
 export default function App() {
@@ -23,6 +24,8 @@ export default function App() {
             <Route exact path="/map" component={Map} />
             <Route exact path="/shelter" component={ShelterData} />
             <Route exact path="/getdirections" component={GetDirections} />
+            <Route path="/disclaimer" component={Disclaimer} />
+            <Route path="/ShelterFeedback" component={ShelterFeedback} />
         </View>
       </NativeRouter>
     </Provider>

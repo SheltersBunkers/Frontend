@@ -16,6 +16,7 @@ import {
     POST_TO_SHELTER_FAILURE 
 } from '../actions/index.js';
 
+
 const initialState = {
     user: null,
     comments: [],
@@ -26,11 +27,14 @@ const initialState = {
     registering: false,
     posting: false,
     postFailed: false,
-    logginFailed: ""
+    logginFailed: "",
+    errors: null,
+    regFailure: null
 }
 
 export default reducer = (state = initialState, action) => {
     switch(action.type){
+        
         case LOGIN:
             return {
                 ...state,
@@ -41,13 +45,15 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
-                loggingIn: false
+                loggingIn: false,
+                errors: null
             }
         case LOGIN_FAILURE: 
             return  {
                 ...state,
                 loggingIn: false,
-                logginFailed: true
+                logginFailed: true,
+                errors: action.payload
             }
         case REGISTERING:
             return {
@@ -58,13 +64,14 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 registering: false,
+                regFailure: null,
                 user: action.payload
             }
         case REGISTERING_FAILURE:
             return {
                 ...state,
                 registering: false,
-                user: "There is an error registering"
+                regFailure: "Username is taken."
             }
         case FETCHING_COMMENTS_BY_SHELTER_ID:
             return {

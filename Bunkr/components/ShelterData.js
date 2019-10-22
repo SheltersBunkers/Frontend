@@ -15,7 +15,7 @@ import {AsyncStorage} from 'react-native';
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
     const shelter = location.state;
-    const [ message, setMessage ] = useState('HI');
+    const [ message, setMessage ] = useState('');
     const dispatch = useDispatch();
     const user = useSelector( state => state.user);
     const shelterComments = useSelector( state => state.comments );
