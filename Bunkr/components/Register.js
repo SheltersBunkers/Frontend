@@ -29,13 +29,13 @@ const Register = ({ history }) => {
         validationSchema={validationSchema}>
             {formikProps => (
                 <>
-                <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} autoFocus />
+                <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} />
                 <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
-                <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")} autoFocus />
+                <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")}  />
                 <Text style={styles.alert}>{formikProps.touched.email && formikProps.errors.email}</Text>
-                <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} autoFocus />
+                <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")}  />
                 <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
-                <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={formikProps.handleChange('verifyPassword')} secureTextEntry onBlur={formikProps.handleBlur("verifyPassword")} autoFocus />
+                <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={formikProps.handleChange('verifyPassword')} secureTextEntry onBlur={formikProps.handleBlur("verifyPassword")}  />
                 <Text style={styles.alert}>{formikProps.touched.verifyPassword &&  formikProps.errors.verifyPassword}</Text>
                 {formikProps.isSubmitting ? 
                     <ActivityIndicator /> : 

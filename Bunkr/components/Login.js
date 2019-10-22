@@ -24,9 +24,9 @@ const Login = ({ history }) => {
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>
-                    <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} autoFocus />
+                    <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")}  />
                     <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
-                    <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} autoFocus />
+                    <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} />
                     <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
                     {formikProps.isSubmitting ? 
                         <ActivityIndicator /> : 
