@@ -17,14 +17,16 @@ import {
 } from '../actions/index.js';
 
 const initialState = {
-    user: 'Todd',
+    user: null,
     comments: [],
     loggingIn: false,
     fetchingComments: false,
     locations: [],
     fetchingLocations: false,
     registering: false,
-    posting: false
+    posting: false,
+    postFailed: false,
+    logginFailed: ""
 }
 
 export default reducer = (state = initialState, action) => {
@@ -32,6 +34,7 @@ export default reducer = (state = initialState, action) => {
         case LOGIN:
             return {
                 ...state,
+                user: action.payload,
                 loggingIn: true
             }
         case LOGIN_SUCCESS:
@@ -43,7 +46,8 @@ export default reducer = (state = initialState, action) => {
         case LOGIN_FAILURE: 
             return  {
                 ...state,
-                loggingIn: true
+                loggingIn: false,
+                logginFailed: true
             }
         case REGISTERING:
             return {
@@ -108,7 +112,8 @@ export default reducer = (state = initialState, action) => {
         case POST_TO_SHELTER_FAILURE:
             return {
                 ...state,
-                posting: false
+                posting: false,
+                postFailed: action.payload
             }
         default:
             return state
