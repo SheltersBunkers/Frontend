@@ -32,7 +32,15 @@ export const login = (history, user) => dispatch => {
 
     axios.post('https://bunkr-up.herokuapp.com/login', user)
     .then(res => {
-        AsyncStorage.setItem('Bunkr_token', res.data.token);
+        saved = async () => {
+            try {
+                await AsyncStorage.setItem('Bunkr_token', res.data.token);
+                console.log('saved')
+            } catch (error){
+                console.log('failed to save token')
+            }
+        }
+        saved();
         dispatch({ type: LOGIN_SUCCESS, payload: res.data })
     })
     .then(res => history.push('/map'))
@@ -51,7 +59,14 @@ export const register = (history, user) => dispatch => {
     }
     axios.post('https://bunkr-up.herokuapp.com/login/register', clean)
     .then(res => {
-        AsyncStorage.setItem('Bunkr_token', res.data.token);
+        saved = async () => {
+            try {
+                await AsyncStorage.setItem('Bunkr_token', res.data.token);
+            } catch (error){
+                console.log('failed to save token')
+            }
+        }
+        saved();
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
         
     })
@@ -88,23 +103,30 @@ export const get_comments_by_id = (id) => dispatch => {
 
 export const post_comment_to_shelter = (id, message, userId) => dispatch => {
     dispatch({ type: POSTING })
-    let token;
-    token = AsyncStorage.getItem('Bunkr_token');
+    find = async () => {
+        try {
+             let token = await AsyncStorage.getItem('Bunkr_token');
+             const messageObj = {
+             comment: message,
+             user_id: userId,
+             shelter_id: id
+            }
 
-    const messageObj = {
-        comment: message,
-        user_id: userId,
-        shelter_id: id
+            return axiosWithAuth(token)
+                .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
+                .then(res => {
+                    dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
+                })
+                .catch(err => {
+                    dispatch({ type: POST_TO_SHELTER_FAILURE, payload: token })
+                })
+        } catch (error){
+            console.log('something went wrong')
+        }
+       
     }
+    find()
 
-    return axiosWithAuth(token)
-        .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
-        .then(res => {
-            dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
-        })
-        .catch(err => {
-            dispatch({ type: POST_TO_SHELTER_FAILURE, payload: token })
-        })
 }
 
 
