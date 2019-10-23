@@ -19,11 +19,14 @@ const validationSchema = yup.object().shape({
 const Register = ({ history }) => {
     const dispatch = useDispatch();
     const registering = useSelector(state => state.registering);
-    const regFailure = useSelector(state => state.regFailure)
+    const regFailure = useSelector(state => state.regFailure);
+
     return (
     <View style={styles.page}>
-    <Text style={styles.reg}>DORTHY'S BUNKR</Text>
-    <Text style={{fontSize: 20, textAlign: "center"}}>REGISTERATION</Text>
+        <View style={styles.top}>
+            <Text style={styles.reg}>Dorothy's</Text>
+            <Text style={styles.reg1}>Bunker</Text>
+         </View>
     <SafeAreaView style={styles.safe}>
         <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
         onSubmit={(values, actions) => dispatch(register(history, values))}
@@ -62,23 +65,30 @@ const Register = ({ history }) => {
 
 
 const styles = StyleSheet.create({
+    top: {
+        marginTop: 40
+    },
     reg: {
-        fontSize: 20,
-        color: "black",
+        fontSize: 50,
+        color: "#3366CC",
         textAlign: "center",
-        marginTop: "10%",
-        color: "#66C7F4",
-        fontWeight: "bold"
-    
+        color: "#3366CC"
+    },
+    reg1: {
+        fontSize: 50,
+        color: "#3366CC",
+        textAlign: "center",
+        color: "#3366CC",
+        marginTop: -20
     },
     page: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#6C6EA0"
-    },
+        backgroundColor: "#D0D0D0"
+       },
     safe: {
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: "#E8E8E8",
         borderRadius: 30,
         paddingTop: 40,
         paddingBottom: 40,
@@ -94,7 +104,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 30, 
         marginVertical: 5,
         width: 250, 
-        borderRadius: 5
+        borderRadius: 5,
+        marginTop: -1,
+        marginBottom: -1
     },
     alert: {
         color: "#FF1053"
@@ -112,12 +124,13 @@ const styles = StyleSheet.create({
         borderColor: "black",
         textAlign: "center",
         borderRadius: 10,
-        backgroundColor: "#C1CAD6"
+        backgroundColor: "#3366CC"
     },
     center: {
         textAlign: "center",
         fontSize: 20,
-        paddingTop: 15
+        paddingTop: 15,
+        color: "white"
     },
     goHome: {
         marginTop: 50

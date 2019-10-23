@@ -30,7 +30,7 @@ const Home = ({ history }) => {
                         <TouchableOpacity title="Register" onPress={() => history.push("/register")} ><Text style={styles.reg}>Register</Text></TouchableOpacity>
                     </View>
                     <View style={{marginBottom: 20}}>
-                        <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Shelter Feedback</Text></TouchableOpacity>
+                        <TouchableOpacity title="Login" onPress={() => history.push("/shelterfeedback")}><Text style={styles.log}>Shelter Feedback</Text></TouchableOpacity>
                     </View>
                     <View style={{marginBottom: 20}}>
                         <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     company: {
         fontSize: 50,
-        marginTop: 60,
+        marginTop: 40,
         textAlign: "center",
         color: "#3366CC"
     },

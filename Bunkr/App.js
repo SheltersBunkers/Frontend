@@ -25,7 +25,7 @@ export default function App() {
             <Route exact path="/shelter" component={ShelterData} />
             <Route exact path="/getdirections" component={GetDirections} />
             <Route path="/disclaimer" component={Disclaimer} />
-            <Route path="/ShelterFeedback" component={ShelterFeedback} />
+            <Route path="/shelterfeedback" component={ShelterFeedback} />
         </View>
       </NativeRouter>
     </Provider>

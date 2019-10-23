@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         color: "#3366CC"
     },
     top: {
-        marginTop: 60
+        marginTop: 40
     },
     reg: {
         fontSize: 50,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         borderColor: "black",
         textAlign: "center",
         borderRadius: 5,
-        backgroundColor: "#3366CC",
+        backgroundColor: "#3366CC"
        
     },
     center: {
