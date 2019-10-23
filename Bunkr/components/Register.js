@@ -50,9 +50,9 @@ const Register = ({ history }) => {
             )}
         </Formik>
             <View style={{flexDirection: "row", marginTop: 30}}>
-                <Text>Already registered?</Text> 
+                <Text style={styles.color}>Already registered?</Text> 
                 <TouchableOpacity onPress={() => history.push('/login')} >
-                    <Text> Login Here!</Text>
+                    <Text style={styles.color}> Login Here!</Text>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
@@ -65,6 +65,9 @@ const Register = ({ history }) => {
 
 
 const styles = StyleSheet.create({
+    color: {
+        color: "#3366CC"
+    },
     top: {
         marginTop: 40
     },
