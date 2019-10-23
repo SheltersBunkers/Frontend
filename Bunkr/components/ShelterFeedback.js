@@ -4,7 +4,9 @@ import { Link } from 'react-router';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { loggingIn } from '../actions'
+import { send_feedback } from '../actions';
+
+
 const validationSchema = yup.object().shape({
     shelterName: yup.string().required('Shelter Name is a required field'),
     address: yup.string(),
@@ -15,7 +17,7 @@ const validationSchema = yup.object().shape({
 
 const ShelterFeedback = ({ history }) => {
     const dispatch = useDispatch();
-
+    const sendingFeedback = useSelector(state => state.sendingFeedback)
     return (
         <View style={styles.page}>
             <View style={styles.top}>
@@ -25,7 +27,7 @@ const ShelterFeedback = ({ history }) => {
             <SafeAreaView style={styles.safe}>
             
             <Formik initialValue={{shelterName: '', address: '', yourName: '', info: '', contactNum: ''}}  
-            onSubmit={(values, actions) => { dispatch(login(history, values))}}
+            onSubmit={(values, actions) => { dispatch(send_feedback(values))}}
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>
@@ -38,7 +40,7 @@ const ShelterFeedback = ({ history }) => {
                     <TextInput placeholder="Shelter Contact Information" style={styles.input} onChangeText={formikProps.handleChange('contactNum')} onBlur={formikProps.handleBlur("address")} />
                     <Text></Text>
                     <TextInput placeholder="Your Name" style={styles.input} onChangeText={formikProps.handleChange('yourName')} onBlur={formikProps.handleBlur("yourName")} />
-                    {loggingIn ? 
+                    {sendingFeedback ? 
                         <ActivityIndicator /> : 
                         <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Submit</Text></TouchableOpacity>}
                     </>

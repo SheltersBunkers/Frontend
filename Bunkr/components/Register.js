@@ -56,7 +56,7 @@ const Register = ({ history }) => {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
-                    <Text style={styles.close}>Click here to go to home page!</Text>
+                    <Text style={styles.color}>Click here to go to home page!</Text>
             </TouchableOpacity>
     </SafeAreaView>
     </View>

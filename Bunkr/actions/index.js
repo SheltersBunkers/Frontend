@@ -26,6 +26,9 @@ export const POSTING = "POSTING";
 export const POST_TO_SHELTER_SUCCESS = "POST_TO_SHELTER_SUCCESS";
 export const POST_TO_SHELTER_FAILURE = "POST_TO_SHELTER_FAILURE";
 
+export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
+export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
+export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
 export const login = (history, user) => dispatch => {
     dispatch({ type: LOGIN })
@@ -128,6 +131,18 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
     find()
 
 }
+
+export const ssend_feedback = (feedback) => dispatch => {
+    dispatch({ type: SENDING_FEEDBACK })
+
+    axios.post('https://bunkr-up.herokuapp.com/tellus')
+        .then(res => {
+            dispatch({ type: SENDING_FEEDBACK_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            dispatch({ type: SENDING_FEEDBACK_FAILURE, payload: err })
+        })
+} 
 
 
 

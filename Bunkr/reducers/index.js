@@ -13,7 +13,10 @@ import {
     GET_LOCATIONS_FAILURE,
     POSTING,
     POST_TO_SHELTER_SUCCESS,
-    POST_TO_SHELTER_FAILURE 
+    POST_TO_SHELTER_FAILURE,
+    SENDING_FEEDBACK,
+    SENDING_FEEDBACK_SUCCESS,
+    SENDING_FEEDBACK_FAILURE 
 } from '../actions/index.js';
 
 
@@ -29,7 +32,8 @@ const initialState = {
     postFailed: false,
     logginFailed: "",
     errors: null,
-    regFailure: null
+    regFailure: null,
+    sendingFeedback: false
 }
 
 export default reducer = (state = initialState, action) => {
@@ -122,6 +126,21 @@ export default reducer = (state = initialState, action) => {
                 posting: false,
                 postFailed: action.payload
             }
+        case SENDING_FEEDBACK:
+            return {
+                ...state,
+                sendingFeedback: true
+            }
+        case SENDING_FEEDBACK_SUCCESS: 
+            return {
+                ...state,
+                sendingFeedback: false
+        }
+        case SENDING_FEEDBACK_FAILURE:
+            return {
+                ...state,
+                sendingFeedback: false
+            } 
         default:
             return state
     }
