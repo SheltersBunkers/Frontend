@@ -132,14 +132,16 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
 
 }
 
-export const ssend_feedback = (feedback) => dispatch => {
+export const send_feedback = (feedback) => dispatch => {
     dispatch({ type: SENDING_FEEDBACK })
 
     axios.post('https://bunkr-up.herokuapp.com/tellus')
         .then(res => {
+            console.log('success here in send feedback')
             dispatch({ type: SENDING_FEEDBACK_SUCCESS, payload: res.data })
         })
         .catch(err => {
+            console.log('failed')
             dispatch({ type: SENDING_FEEDBACK_FAILURE, payload: err })
         })
 } 

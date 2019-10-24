@@ -9,15 +9,16 @@ import { send_feedback } from '../actions';
 
 const validationSchema = yup.object().shape({
     shelterName: yup.string().required('Shelter Name is a required field'),
-    address: yup.string(),
+    address: yup.string().required("Shelter address is required."),
     yourName: yup.string(),
     info: yup.string().required("Tell us necessary information."),
-    contactNum: yup.string()
+    contactNum: yup.string().required("Shelter number is required.")
 })
 
 const ShelterFeedback = ({ history }) => {
     const dispatch = useDispatch();
-    const sendingFeedback = useSelector(state => state.sendingFeedback)
+    const sendingFeedback = useSelector(state => state.sendingFeedback);
+
     return (
         <View style={styles.page}>
             <View style={styles.top}>
@@ -34,12 +35,12 @@ const ShelterFeedback = ({ history }) => {
                     <TextInput  placeholder="Shelter Name" style={styles.input} onChangeText={formikProps.handleChange('shelterName')} onBlur={formikProps.handleBlur("shelterName")}  />
                     <Text style={styles.alert}>{formikProps.touched.shelterName && formikProps.errors.shelterName}</Text>
                     <TextInput placeholder="Shelter Address" style={styles.input} onChangeText={formikProps.handleChange('address')} onBlur={formikProps.handleBlur("address")} />
-                    <Text></Text>
+                    <Text style={styles.alert}>{formikProps.touched.address && formikProps.errors.address}</Text>
                     <TextInput placeholder="Relevant Information" style={styles.input} onChangeText={formikProps.handleChange('info')} onBlur={formikProps.handleBlur("info")} />
                     <Text style={styles.alert}>{formikProps.touched.info && formikProps.errors.info}</Text>
-                    <TextInput placeholder="Shelter Contact Information" style={styles.input} onChangeText={formikProps.handleChange('contactNum')} onBlur={formikProps.handleBlur("address")} />
-                    <Text></Text>
-                    <TextInput placeholder="Your Name" style={styles.input} onChangeText={formikProps.handleChange('yourName')} onBlur={formikProps.handleBlur("yourName")} />
+                    <TextInput placeholder="Shelter Phone Number" style={styles.input} onChangeText={formikProps.handleChange('contactNum')} onBlur={formikProps.handleBlur("contactNum")} />
+                    <Text style={styles.alert}>{formikProps.touched.contactNum && formikProps.errors.contactNum}</Text>
+                    <TextInput placeholder="Your Name (optional)" style={styles.input} onChangeText={formikProps.handleChange('yourName')} onBlur={formikProps.handleBlur("yourName")} />
                     {sendingFeedback ? 
                         <ActivityIndicator /> : 
                         <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Submit</Text></TouchableOpacity>}
