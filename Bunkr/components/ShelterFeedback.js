@@ -18,6 +18,7 @@ const validationSchema = yup.object().shape({
 const ShelterFeedback = ({ history }) => {
     const dispatch = useDispatch();
     const sendingFeedback = useSelector(state => state.sendingFeedback);
+    const response = useSelector(state => state.feedbackResponse)
 
     return (
         <View style={styles.page}>
@@ -41,6 +42,7 @@ const ShelterFeedback = ({ history }) => {
                     <TextInput placeholder="Shelter Phone Number" style={styles.input} onChangeText={formikProps.handleChange('contactNum')} onBlur={formikProps.handleBlur("contactNum")} />
                     <Text style={styles.alert}>{formikProps.touched.contactNum && formikProps.errors.contactNum}</Text>
                     <TextInput placeholder="Your Name (optional)" style={styles.input} onChangeText={formikProps.handleChange('yourName')} onBlur={formikProps.handleBlur("yourName")} />
+                    { response ? <Text style={styles.blueColor}>{response}</Text> : null }
                     {sendingFeedback ? 
                         <ActivityIndicator /> : 
                         <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Submit</Text></TouchableOpacity>}

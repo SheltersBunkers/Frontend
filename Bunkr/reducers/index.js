@@ -33,7 +33,8 @@ const initialState = {
     logginFailed: "",
     errors: null,
     regFailure: null,
-    sendingFeedback: false
+    sendingFeedback: false,
+    feedbackResponse: null
 }
 
 export default reducer = (state = initialState, action) => {
@@ -129,17 +130,20 @@ export default reducer = (state = initialState, action) => {
         case SENDING_FEEDBACK:
             return {
                 ...state,
-                sendingFeedback: true
+                sendingFeedback: true,
+                feedbackResponse: null
             }
         case SENDING_FEEDBACK_SUCCESS: 
             return {
                 ...state,
-                sendingFeedback: false
+                sendingFeedback: false,
+                feedbackResponse: "Thanks for the feedback."
         }
         case SENDING_FEEDBACK_FAILURE:
             return {
                 ...state,
-                sendingFeedback: false
+                sendingFeedback: false,
+                feedbackResponse: null
             } 
         default:
             return state
