@@ -33,7 +33,7 @@ const Home = ({ history }) => {
                         <TouchableOpacity title="Login" onPress={() => history.push("/shelterfeedback")}><Text style={styles.log}>Shelter Feedback</Text></TouchableOpacity>
                     </View>
                     <View style={{marginBottom: 20}}>
-                        <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
+                        <TouchableOpacity title="Login" onPress={() => history.push("/disclaimer")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
                     </View>
                 </View>
         </SafeAreaView>

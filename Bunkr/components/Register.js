@@ -56,14 +56,14 @@ const Register = ({ history }) => {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
-                    <Text style={styles.color}>Click here to go to home page!</Text>
+                    <Text style={styles.color}>Go Home</Text>
             </TouchableOpacity>
     </SafeAreaView>
     </View>
     )
 };
 
-
+ 
 const styles = StyleSheet.create({
     color: {
         color: "#3366CC"
@@ -123,8 +123,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 200,
         height: 60,
-        borderWidth: 1,
-        borderColor: "black",
         textAlign: "center",
         borderRadius: 10,
         backgroundColor: "#3366CC"

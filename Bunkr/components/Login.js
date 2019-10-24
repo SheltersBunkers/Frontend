@@ -44,12 +44,20 @@ const Login = ({ history }) => {
             <View style={{flexDirection: "row", marginTop: 50}}>
                 <Text style={styles.blueColor}>Not registered?</Text> 
                 <TouchableOpacity onPress={() => history.push('/register')} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
+                    <Text style={styles.blueColor}>Go Home</Text>
+            </TouchableOpacity>
             </View>
     </SafeAreaView>
     </View>
     )
 }
+
 const styles = StyleSheet.create({
+    goHome: {
+        marginTop: 50,
+        textAlign: "center"
+    },
     blueColor: {
         color: "#3366CC"
     },
@@ -106,8 +114,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 200,
         height: 60,
-        borderWidth: 1,
-        borderColor: "black",
         textAlign: "center",
         borderRadius: 5,
         backgroundColor: "#3366CC"
