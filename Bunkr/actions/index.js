@@ -3,8 +3,8 @@ import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 
 export const LOGIN = "LOGIN";
-export const LOGIN_SUCCESS = "LOGIN";
-export const LOGIN_FAILURE = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const REGISTERING = "REGISTERING";
 export const REGISTERING_SUCCESS = "REGISTERING_SUCCESS";
@@ -26,6 +26,9 @@ export const POSTING = "POSTING";
 export const POST_TO_SHELTER_SUCCESS = "POST_TO_SHELTER_SUCCESS";
 export const POST_TO_SHELTER_FAILURE = "POST_TO_SHELTER_FAILURE";
 
+export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
+export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
+export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
 export const login = (history, user) => dispatch => {
     dispatch({ type: LOGIN })
@@ -35,7 +38,6 @@ export const login = (history, user) => dispatch => {
         saved = async () => {
             try {
                 await AsyncStorage.setItem('Bunkr_token', res.data.token);
-                console.log('saved')
             } catch (error){
                 console.log('failed to save token')
             }
@@ -45,7 +47,8 @@ export const login = (history, user) => dispatch => {
     })
     .then(res => history.push('/map'))
     .catch(err => {
-        dispatch({ type: LOGIN_FAILURE, payload: err })
+        console.log('Failed here in login')
+        dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
 
@@ -128,6 +131,28 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
     find()
 
 }
+
+export const send_feedback = (feedback) => dispatch => {
+    dispatch({ type: SENDING_FEEDBACK })
+    console.log(feedback)
+    const clean = {
+        address: feedback.address,
+        contactNum: feedback.contactNum,
+        info: feedback.info,
+        shelterName: feedback.shelterName,
+        yourName: feedback.yourName || null
+    }
+    console.log(clean)
+    axios.post('https://bunkr-up.herokuapp.com/tellus', clean)
+        .then(res => {
+            console.log('success here in send feedback')
+            dispatch({ type: SENDING_FEEDBACK_SUCCESS, payload: res.data })
+        })
+        .catch(err => {
+            console.log('failed')
+            dispatch({ type: SENDING_FEEDBACK_FAILURE, payload: err })
+        })
+} 
 
 
 

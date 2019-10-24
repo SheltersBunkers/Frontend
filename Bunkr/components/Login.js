@@ -13,22 +13,28 @@ const validationSchema = yup.object().shape({
 
 const Login = ({ history }) => {
     const dispatch = useDispatch();
-
+    const userError = useSelector(state => state.errors);
+    const loggingIn = useSelector(state => state.loggingIn);
 
     return (
         <View style={styles.page}>
-        <Text style={styles.reg}>DORTHY'S BUNKR</Text>
-        <SafeAreaView style={styles.safe}>
+            <View style={styles.top}>
+                <Text style={styles.reg}>Dorothy's</Text>
+                <Text style={styles.reg1}>Bunker</Text>
+            </View>
+            <SafeAreaView style={styles.safe}>
+            
             <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
             onSubmit={(values, actions) => { dispatch(login(history, values))}}
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>
-                    <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} autoFocus />
+                    {userError ? <Text style={{color: "red"}}>{userError}</Text> : null }
+                    <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")}  />
                     <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
-                    <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} autoFocus />
+                    <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} />
                     <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
-                    {formikProps.isSubmitting ? 
+                    {loggingIn ? 
                         <ActivityIndicator /> : 
                         <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>LOGIN</Text></TouchableOpacity>}
                     </>
@@ -36,38 +42,48 @@ const Login = ({ history }) => {
                 )}
             </Formik>
             <View style={{flexDirection: "row", marginTop: 50}}>
-                <Text>Not registered?</Text> 
-                <TouchableOpacity onPress={() => history.push('/register')} style={styles.buttons}><Text>  Register Here!</Text></TouchableOpacity>
+                <Text style={styles.blueColor}>Not registered?</Text> 
+                <TouchableOpacity onPress={() => history.push('/register')} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
             </View>
     </SafeAreaView>
     </View>
     )
 }
 const styles = StyleSheet.create({
+    blueColor: {
+        color: "#3366CC"
+    },
+    top: {
+        marginTop: 40
+    },
     reg: {
-        fontSize: 30,
-        color: "black",
+        fontSize: 50,
         textAlign: "center",
-        marginTop: "20%",
-        color: "#66C7F4",
-        fontWeight: "bold"
+        color: "#3366CC",
     
+    },
+    reg1: {
+        fontSize: 50,
+        textAlign: "center",
+        color: "#3366CC",
+        marginTop: -20,
+        marginBottom: 20
     },
     page: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#6C6EA0"
+        backgroundColor: "#D0D0D0"
     },
     safe: {
         alignItems: "center",
-        backgroundColor: "white",
         borderRadius: 30,
         paddingTop: 40,
         paddingBottom: 40,
         marginLeft: 30,
         marginRight: 30,
         borderColor: "black",
-        borderWidth: 3
+        borderWidth: 3,
+        backgroundColor: "#E8E8E8"
     },
     input: {
         borderWidth: 1, 
@@ -93,13 +109,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "black",
         textAlign: "center",
-        borderRadius: 10,
-        backgroundColor: "#C1CAD6"
+        borderRadius: 5,
+        backgroundColor: "#3366CC"
+       
     },
     center: {
         textAlign: "center",
         fontSize: 20,
-        paddingTop: 15
+        paddingTop: 15,
+        color: "white"
     }
 })
 

@@ -13,8 +13,12 @@ import {
     GET_LOCATIONS_FAILURE,
     POSTING,
     POST_TO_SHELTER_SUCCESS,
-    POST_TO_SHELTER_FAILURE 
+    POST_TO_SHELTER_FAILURE,
+    SENDING_FEEDBACK,
+    SENDING_FEEDBACK_SUCCESS,
+    SENDING_FEEDBACK_FAILURE 
 } from '../actions/index.js';
+
 
 const initialState = {
     user: null,
@@ -26,11 +30,16 @@ const initialState = {
     registering: false,
     posting: false,
     postFailed: false,
-    logginFailed: ""
+    logginFailed: "",
+    errors: null,
+    regFailure: null,
+    sendingFeedback: false,
+    feedbackResponse: null
 }
 
 export default reducer = (state = initialState, action) => {
     switch(action.type){
+        
         case LOGIN:
             return {
                 ...state,
@@ -41,13 +50,15 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
-                loggingIn: false
+                loggingIn: false,
+                errors: null
             }
         case LOGIN_FAILURE: 
             return  {
                 ...state,
                 loggingIn: false,
-                logginFailed: true
+                logginFailed: true,
+                errors: action.payload
             }
         case REGISTERING:
             return {
@@ -58,13 +69,14 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 registering: false,
+                regFailure: null,
                 user: action.payload
             }
         case REGISTERING_FAILURE:
             return {
                 ...state,
                 registering: false,
-                user: "There is an error registering"
+                regFailure: "Username is taken."
             }
         case FETCHING_COMMENTS_BY_SHELTER_ID:
             return {
@@ -115,6 +127,24 @@ export default reducer = (state = initialState, action) => {
                 posting: false,
                 postFailed: action.payload
             }
+        case SENDING_FEEDBACK:
+            return {
+                ...state,
+                sendingFeedback: true,
+                feedbackResponse: null
+            }
+        case SENDING_FEEDBACK_SUCCESS: 
+            return {
+                ...state,
+                sendingFeedback: false,
+                feedbackResponse: "Thanks for the feedback."
+        }
+        case SENDING_FEEDBACK_FAILURE:
+            return {
+                ...state,
+                sendingFeedback: false,
+                feedbackResponse: null
+            } 
         default:
             return state
     }
