@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         color: "#3366CC"
     },
     top: {
-        marginTop: 40
+        marginTop: Platform.OS === "ios" ? 84 : 40
     },
     reg: {
         fontSize: 50,
