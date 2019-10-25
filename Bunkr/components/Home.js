@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, ActivityIndicator, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Button, ActivityIndicator, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native';
 import { useSelector }  from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import tornado from '../assets/tornado.png';
@@ -33,7 +33,7 @@ const Home = ({ history }) => {
                         <TouchableOpacity title="Login" onPress={() => history.push("/shelterfeedback")}><Text style={styles.log}>Shelter Feedback</Text></TouchableOpacity>
                     </View>
                     <View style={{marginBottom: 20}}>
-                        <TouchableOpacity title="Login" onPress={() => history.push("/login")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
+                        <TouchableOpacity title="Login" onPress={() => history.push("/disclaimer")}><Text style={styles.log}>Disclaimer</Text></TouchableOpacity>
                     </View>
                 </View>
         </SafeAreaView>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 20,
         color: "white",
-        paddingTop: 22
+        paddingTop: Platform.OS === "ios" ? 27 : 22
     }
 })
 
