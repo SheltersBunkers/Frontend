@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { Link } from 'react-router';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
@@ -33,7 +33,7 @@ const ShelterFeedback = ({ history }) => {
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>
-                    <TextInput  placeholder="Shelter Name" style={styles.input} onChangeText={formikProps.handleChange('shelterName')} onBlur={formikProps.handleBlur("shelterName")}  />
+                    <TextInput  placeholder="Shelter Name" style={styles.input1} onChangeText={formikProps.handleChange('shelterName')} onBlur={formikProps.handleBlur("shelterName")}  />
                     <Text style={styles.alert}>{formikProps.touched.shelterName && formikProps.errors.shelterName}</Text>
                     <TextInput placeholder="Shelter Address" style={styles.input} onChangeText={formikProps.handleChange('address')} onBlur={formikProps.handleBlur("address")} />
                     <Text style={styles.alert}>{formikProps.touched.address && formikProps.errors.address}</Text>
@@ -101,6 +101,16 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         width: 250, 
         borderRadius: 5
+    },
+    input1: {
+        borderWidth: 1, 
+        borderColor: 'black', 
+        padding: 10, 
+        marginHorizontal: 30, 
+        marginVertical: 5,
+        width: 250, 
+        borderRadius: 5,
+        marginTop: Platform.OS === 'ios' ? 40 : 1
     },
     alert: {
         color: "#FF1053"

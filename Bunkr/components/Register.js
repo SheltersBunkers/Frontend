@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { Link } from 'react-router';
 import { login, register } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
@@ -10,7 +10,7 @@ import * as yup from 'yup';
 const validationSchema = yup.object().shape({
     username: yup.string().required('Username is a required field'),
     email: yup.string().required('Email is a required field').email(),
-    password: yup.string().required('Password').min(6, 'Minimum 6 characters').max(20, 'Maximum 20 characters'),
+    password: yup.string().required('Password is a required field').min(6, 'Minimum 6 characters').max(20, 'Maximum 20 characters'),
     verifyPassword: yup.string().required().label('Confirm password').test('passwords-match', "Passwords must match", function(value) {
         return this.parent.password === value;
     })
@@ -34,7 +34,7 @@ const Register = ({ history }) => {
             {formikProps => (
                 <>
                 { regFailure ? <Text>{regFailure}</Text> : null }
-                <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} />
+                <TextInput  placeholder="Username" style={styles.input1} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} />
                 <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
                 <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")}  />
                 <Text style={styles.alert}>{formikProps.touched.email && formikProps.errors.email}</Text>
@@ -108,8 +108,19 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         width: 250, 
         borderRadius: 5,
-        marginTop: -1,
-        marginBottom: -1
+        marginTop: Platform.OS === "ios" ? 5 : -1,
+        marginBottom: Platform.OS === "ios" ? 5 : -1
+    },
+    input1: {
+        borderWidth: 1, 
+        borderColor: 'black', 
+        padding: 10, 
+        marginHorizontal: 30, 
+        marginVertical: 5,
+        width: 250, 
+        borderRadius: 5,
+        marginTop: Platform.OS === "ios" ? 40 : 1,
+        marginBottom: Platform.OS === "ios" ? 5 : -1
     },
     alert: {
         color: "#FF1053"

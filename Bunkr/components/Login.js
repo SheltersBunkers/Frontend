@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { Link } from 'react-router';
 import { login } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
@@ -30,7 +30,7 @@ const Login = ({ history }) => {
                 {formikProps => (
                     <>
                     {userError ? <Text style={{color: "red"}}>{userError}</Text> : null }
-                    <TextInput  placeholder="Username" style={styles.input} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")}  />
+                    <TextInput  placeholder="Username" style={styles.input1} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")}  />
                     <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
                     <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")} />
                     <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
@@ -92,6 +92,16 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 3,
         backgroundColor: "#E8E8E8"
+    },
+    input1: {
+        borderWidth: 1, 
+        borderColor: 'black', 
+        padding: 10, 
+        marginHorizontal: 30, 
+        marginVertical: 5,
+        width: 250, 
+        borderRadius: 5,
+        marginTop: Platform.OS === "ios" ? 40 : 10
     },
     input: {
         borderWidth: 1, 
