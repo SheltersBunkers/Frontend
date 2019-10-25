@@ -41,28 +41,33 @@ const Login = ({ history }) => {
                     
                 )}
             </Formik>
-            <View style={{flexDirection: "row", marginTop: 50}}>
+            <View style={styles.flexing}>
                 <Text style={styles.blueColor}>Not registered?</Text> 
                 <TouchableOpacity onPress={() => history.push('/register')} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
+            </View>
                 <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
                     <Text style={styles.blueColor}>Go Home</Text>
             </TouchableOpacity>
-            </View>
+            
     </SafeAreaView>
     </View>
     )
 }
 
 const styles = StyleSheet.create({
+    flexing: {
+        flexDirection: "row",
+        marginTop: 50
+    },
     goHome: {
         marginTop: 50,
-        textAlign: "center"
+        paddingBottom: 20
     },
     blueColor: {
         color: "#3366CC"
     },
     top: {
-        marginTop: 40
+        marginTop: Platform.OS === "ios" ? 84 : 40
     },
     reg: {
         fontSize: 50,

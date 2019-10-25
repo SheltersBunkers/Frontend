@@ -66,10 +66,11 @@ const Register = ({ history }) => {
  
 const styles = StyleSheet.create({
     color: {
-        color: "#3366CC"
+        color: "#3366CC",
+        paddingBottom: 20
     },
     top: {
-        marginTop: 40
+        marginTop: Platform.OS === "ios" ? 84 : 40
     },
     reg: {
         fontSize: 50,
