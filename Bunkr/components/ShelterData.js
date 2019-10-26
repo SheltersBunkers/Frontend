@@ -66,17 +66,18 @@ const ShelterData = ({ history, location }) => {
 
                     {(!user) ?
                         <TouchableOpacity onPress={() => history.push('/login')}>
-                            <Text style={styles.logOrReg}>Login or register to comment</Text>
+                            <Text style={styles.logOrReg1}>Login or register to comment</Text>
                         </TouchableOpacity> : null } 
-                        <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.goHome}>
+                        <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>View Comments on Shelter</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
-                            <Text style={styles.logOrReg}>Go Home</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => history.push('/map')} style={styles.goHome}>
+                        <TouchableOpacity onPress={() => history.push('/map')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Back to Map</Text>
                         </TouchableOpacity> 
+                        <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
+                            <Text style={styles.logOrReg}>Go Home</Text>
+                        </TouchableOpacity>
+                        
                 </View> : 
                     <View>
                             <TextInput
@@ -100,14 +101,31 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    madeButton: {
+        alignSelf: "center",
+        backgroundColor: "#3366CC",
+        height: 50,
+        width: 300,
+        marginBottom: 25,
+        borderRadius: 5,
+        paddingTop: 13
+    },
     logOrReg: {
         textAlign: "center",
-        fontSize: 15,
-        fontWeight: "bold"
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "white"
+    },
+    logOrReg1: {
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 20
     },
     page: {
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor: "#D0D0D0"
     },
     co: {
         flex: 4
@@ -133,7 +151,7 @@ const styles =  StyleSheet.create({
         right: 20
     },
     map: {
-        flex: 6
+        flex: 3
     },
     container: {
         flex: 3
@@ -166,18 +184,6 @@ const styles =  StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         color: "#3366CC"
-    },
-    hairLineWidth: {
-        width: 400,
-        height: 1,
-        backgroundColor: "black"
-    },
-    telephoneNum: {
-        color: "teal",
-        fontSize: 20,
-        marginLeft: 20,
-        marginTop: 10,
-        marginBottom: 10
     },
     flexing: {
         flex: 1,
