@@ -33,8 +33,6 @@ export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
 
-    console.log(shelter);
-
     axios.post('https://bunkr-up.herokuapp.com/login', user)
     .then(res => {
         saved = async () => {
@@ -49,7 +47,6 @@ export const login = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
-        console.log('Failed here in login')
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
@@ -57,8 +54,6 @@ export const login = (history, user, shelter) => dispatch => {
 export const register = (history, user, shelter) => dispatch => {
     dispatch({ type: REGISTERING })
 
-    console.log(shelter);
-    
     let clean = {
         username: user.username,
         password: user.password,
