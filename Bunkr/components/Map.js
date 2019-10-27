@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
-import ShelterData from './ShelterData';
 import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
-
+import { get_locations } from '../actions'
+import { useSelector, useDispatch }  from 'react-redux';
 
 const Map = ({ history }) => {
     const [ selectedShelter, setSelectedShelter ] = useState(null);
@@ -14,6 +14,8 @@ const Map = ({ history }) => {
     });
     const [ error, setError ] = useState(null);
     const [ showShelter, setShowShelter ] = useState(false);
+    const locations = useSelector(state => state.locations);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let geoOptions={
@@ -24,6 +26,10 @@ const Map = ({ history }) => {
         setReady(false)
         setError(null)
         navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
+    }, []);
+
+    useEffect(() => {
+        dispatch(get_locations())
     }, [])
 
     callGeo = () => { //going to use to call ever so often to get location update.// escpecially if speed is greater than 1.
