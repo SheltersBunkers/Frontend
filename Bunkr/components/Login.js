@@ -16,6 +16,8 @@ const Login = ({ history, location }) => {
     const userError = useSelector(state => state.errors);
     const loggingIn = useSelector(state => state.loggingIn);
 
+    const shelter = location.state;
+
     return (
         <View style={styles.page}>
             <View style={styles.top}>
@@ -25,7 +27,7 @@ const Login = ({ history, location }) => {
             <SafeAreaView style={styles.safe}>
             
             <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
-            onSubmit={(values, actions) => { dispatch(login(history, values))}}
+            onSubmit={(values, actions) => { dispatch(login(history, values, shelter))}}
             validationSchema={validationSchema}>
                 {formikProps => (
                     <>
@@ -43,7 +45,7 @@ const Login = ({ history, location }) => {
             </Formik>
             <View style={styles.flexing}>
                 <Text style={styles.blueColor}>Not registered?</Text> 
-                <TouchableOpacity onPress={() => history.push('/register')} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => history.push('/register', shelter)} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
             </View>
                 <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
                     <Text style={styles.blueColor}>Go Home</Text>

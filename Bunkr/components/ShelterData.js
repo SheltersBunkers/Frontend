@@ -65,7 +65,7 @@ const ShelterData = ({ history, location }) => {
                     { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
 
                     {(!user) ?
-                        <TouchableOpacity onPress={() => history.push('/login')}>
+                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
                             <Text style={styles.logOrReg1}>Login or register to comment</Text>
                         </TouchableOpacity> : null } 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
