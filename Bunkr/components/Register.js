@@ -16,10 +16,12 @@ const validationSchema = yup.object().shape({
     })
 })
 
-const Register = ({ history }) => {
+const Register = ({ history, location }) => {
     const dispatch = useDispatch();
     const registering = useSelector(state => state.registering);
     const regFailure = useSelector(state => state.regFailure);
+
+    const shelter = location.state;
 
     return (
     <View style={styles.page}>
@@ -29,7 +31,7 @@ const Register = ({ history }) => {
          </View>
     <SafeAreaView style={styles.safe}>
         <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
-        onSubmit={(values, actions) => dispatch(register(history, values))}
+        onSubmit={(values, actions) => dispatch(register(history, values, shelter))}
         validationSchema={validationSchema}>
             {formikProps => (
                 <>
@@ -51,7 +53,7 @@ const Register = ({ history }) => {
         </Formik>
             <View style={{flexDirection: "row", marginTop: 30}}>
                 <Text style={styles.color}>Already registered?</Text> 
-                <TouchableOpacity onPress={() => history.push('/login')} >
+                <TouchableOpacity onPress={() => history.push('/login', shelter)} >
                     <Text style={styles.color}> Login Here!</Text>
                 </TouchableOpacity>
             </View>

@@ -30,7 +30,7 @@ export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
 export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
 export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
-export const login = (history, user) => dispatch => {
+export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
 
     axios.post('https://bunkr-up.herokuapp.com/login', user)
@@ -45,14 +45,13 @@ export const login = (history, user) => dispatch => {
         saved();
         dispatch({ type: LOGIN_SUCCESS, payload: res.data })
     })
-    .then(res => history.push('/map'))
+    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
-        console.log('Failed here in login')
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
 
-export const register = (history, user) => dispatch => {
+export const register = (history, user, shelter) => dispatch => {
     dispatch({ type: REGISTERING })
 
     let clean = {
@@ -73,7 +72,7 @@ export const register = (history, user) => dispatch => {
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
         
     })
-    .then(res => history.push('/map'))
+    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
         dispatch({ type: REGISTERING_FAILURE, payload: err })
     })
