@@ -83,6 +83,7 @@ export const get_locations = () => dispatch => {
 
     axios.get('https://bunkr-up.herokuapp.com/shelters')
         .then(res => {
+            console.log(res.data)
             dispatch({ type: GET_LOCATIONS_SUCCESS, payload: res.data })
         })
         .catch(err => {

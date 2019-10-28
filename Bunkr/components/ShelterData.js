@@ -79,7 +79,9 @@ const ShelterData = ({ history, location }) => {
                         </TouchableOpacity>
                         
                 </View> : 
-                    <View>
+                <View style={styles.container}>
+                    { user ? 
+                        <View> 
                             <TextInput
                                 style={{height: 40}}
                                 placeholder="Insert Message here"
@@ -87,6 +89,7 @@ const ShelterData = ({ history, location }) => {
                                 value={message}
                                 /> 
                             <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
+                        </View> : null }
                             <Text style={styles.comments}>COMMENTS</Text>
                         
                             <View style={styles.co}>
