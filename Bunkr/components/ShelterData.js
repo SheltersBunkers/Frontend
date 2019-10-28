@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
-
+import date from './date.js'
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
@@ -19,6 +19,8 @@ const ShelterData = ({ history, location }) => {
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
 
+    console.log(shelterComments)
+
     useEffect(() => {
         setDistance(getDistance(
             {latitude: shelter.lat, longitude: shelter.lng },
@@ -29,13 +31,16 @@ const ShelterData = ({ history, location }) => {
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id))
-    }, [shelterComments, failed]);
+    }, [failed]);
 
-
+    useEffect(() => {},[shelterComments]);
 
     sendComment = () => {
-        dispatch(post_comment_to_shelter(shelter.id, message, user.id));
-        setMessage('');
+        if (message !== ''){
+            dispatch(post_comment_to_shelter(shelter.id, message, user.id));
+            setMessage('');
+        }
+        
     }
 
     return (
@@ -96,9 +101,12 @@ const ShelterData = ({ history, location }) => {
                             <ScrollView style={styles.scrollView}>
                             {(shelterComments.length === 0) ? <Text style={styles.first}>Be the first to comment on this Shelter</Text> : null}
                                  {shelterComments.map(comment => {
-                                    return <View key={comment.id}>
-                                    <Text style={styles.comment}>{comment.comment}</Text>
-                                    </View>
+                                    return (
+                                    <View key={comment.id}>
+                                        <Text style={styles.comment}>{date(comment.posted_at)}</Text>
+                                        <Text style={styles.commentUser}>{comment.username}</Text>
+                                        <Text style={styles.comment}>{comment.comment}</Text>
+                                    </View> )
                                 })} 
                             </ScrollView>
                     </View> }
@@ -108,6 +116,11 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    commentUser: {
+        fontSize: 15,
+        color:"#3366CC",
+        marginLeft: 10
+    },
     first: {
         textAlign: "center",
         fontSize: 25,
@@ -119,10 +132,11 @@ const styles =  StyleSheet.create({
         marginRight: 10
     },
     comments: {
-        fontSize: 16,
-        color: "#3366CC",
+        fontSize: 20,
         marginLeft: 15,
-        marginTop: 10
+        marginTop: 10,
+        alignSelf: "center",
+        fontWeight: "bold"
     },
     madeButton: {
         alignSelf: "center",

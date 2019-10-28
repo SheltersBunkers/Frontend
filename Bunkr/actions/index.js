@@ -83,7 +83,6 @@ export const get_locations = () => dispatch => {
 
     axios.get('https://bunkr-up.herokuapp.com/shelters')
         .then(res => {
-            console.log(res.data)
             dispatch({ type: GET_LOCATIONS_SUCCESS, payload: res.data })
         })
         .catch(err => {
@@ -118,6 +117,7 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
             return axiosWithAuth(token)
                 .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
                 .then(res => {
+                    console.log(res.data)
                     dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
                 })
                 .catch(err => {
