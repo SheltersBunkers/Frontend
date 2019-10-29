@@ -119,7 +119,8 @@ export default reducer = (state = initialState, action) => {
         case POST_TO_SHELTER_SUCCESS:
             return {
                 ...state,
-                posting: false
+                posting: false,
+                comments: action.payload
             }
         case POST_TO_SHELTER_FAILURE:
             return {

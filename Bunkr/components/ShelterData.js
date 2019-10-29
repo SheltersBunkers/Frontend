@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput } from 'react-native';
-import { gray } from 'ansi-colors';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
-import locations from './data';
 import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
-import {AsyncStorage} from 'react-native';
-
+import date from './date.js'
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
@@ -22,6 +19,8 @@ const ShelterData = ({ history, location }) => {
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
 
+    console.log(shelterComments)
+
     useEffect(() => {
         setDistance(getDistance(
             {latitude: shelter.lat, longitude: shelter.lng },
@@ -32,13 +31,16 @@ const ShelterData = ({ history, location }) => {
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id))
-    }, [shelterComments, failed]);
+    }, [failed]);
 
-
+    useEffect(() => {},[shelterComments]);
 
     sendComment = () => {
-        dispatch(post_comment_to_shelter(shelter.id, message, user.id));
-        setMessage('');
+        if (message !== ''){
+            dispatch(post_comment_to_shelter(shelter.id, message, user.id));
+            setMessage('');
+        }
+        
     }
 
     return (
@@ -90,13 +92,23 @@ const ShelterData = ({ history, location }) => {
                                 /> 
                             <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
                         </View> : null }
+                        {(!user) ? 
+                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
+                            <Text style={styles.logOrReg1}>Login or register to comment</Text>
+                        </TouchableOpacity> : null }
                             <Text style={styles.comments}>COMMENTS</Text>
                         
-                            <View style={styles.co}>
-                                {shelterComments.map(comment => {
-                                    return <Text>{comment.comment}</Text>
+                            <ScrollView style={styles.scrollView}>
+                            {(shelterComments.length === 0) ? <Text style={styles.first}>Be the first to comment on this Shelter</Text> : null}
+                                 {shelterComments.map(comment => {
+                                    return (
+                                    <View key={comment.id}>
+                                        <Text style={styles.comment}>{date(comment.posted_at)}</Text>
+                                        <Text style={styles.commentUser}>{comment.username}</Text>
+                                        <Text style={styles.comment}>{comment.comment}</Text>
+                                    </View> )
                                 })} 
-                            </View>
+                            </ScrollView>
                     </View> }
             </View>
     )
@@ -104,6 +116,28 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    commentUser: {
+        fontSize: 15,
+        color:"#3366CC",
+        marginLeft: 10
+    },
+    first: {
+        textAlign: "center",
+        fontSize: 25,
+        fontStyle: "italic",
+        marginTop: 20
+    },
+    scrollView: {
+        marginLeft: 10,
+        marginRight: 10
+    },
+    comments: {
+        fontSize: 20,
+        marginLeft: 15,
+        marginTop: 10,
+        alignSelf: "center",
+        fontWeight: "bold"
+    },
     madeButton: {
         alignSelf: "center",
         backgroundColor: "#3366CC",
