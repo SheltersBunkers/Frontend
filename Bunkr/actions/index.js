@@ -93,12 +93,14 @@ export const get_locations = () => dispatch => {
 
 export const get_comments_by_id = (id) => dispatch => {
     dispatch({ type: FETCHING_COMMENTS_BY_SHELTER_ID })
-
+    
     axios.get(`https://bunkr-up.herokuapp.com/comments/${id}`)
         .then(res => {
+            console.log(res.data)
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
         })
         .catch(err => {
+            console.log('error getting comments')
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_FAILURE, payload: err })
         })
 }
