@@ -35,7 +35,7 @@ const date = (timeStamp) => {
 
 
 
-    return ('Posted on ' + month + '' + dayOfMonth + ', ' + year + ' at ' + timeHour + ':' + timeMinute +  ' '+amOrPm)
+    return (month + '' + dayOfMonth + ', ' + year + ' ' + timeHour + ':' + timeMinute +  ' '+amOrPm)
 }
 
 

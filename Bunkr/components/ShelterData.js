@@ -19,8 +19,6 @@ const ShelterData = ({ history, location }) => {
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
 
-    console.log(shelterComments)
-
     useEffect(() => {
         setDistance(getDistance(
             {latitude: shelter.lat, longitude: shelter.lng },
@@ -33,7 +31,6 @@ const ShelterData = ({ history, location }) => {
         dispatch(get_comments_by_id(shelter.id))
     }, [failed]);
 
-    useEffect(() => {},[shelterComments]);
 
     sendComment = () => {
         if (message !== ''){
@@ -85,12 +82,14 @@ const ShelterData = ({ history, location }) => {
                     { user ? 
                         <View> 
                             <TextInput
-                                style={{height: 40}}
+                                style={styles.input}
                                 placeholder="Insert Message here"
                                 onChangeText={(text) => setMessage(text)}
                                 value={message}
                                 /> 
-                            <Button onPress={() => sendComment()} title="Submit" style={styles.submit}/>
+                        <TouchableOpacity onPress={() => sendComment()} style={styles.madeButton} >
+                            <Text style={styles.sub}>Submit Comment</Text>
+                        </TouchableOpacity> 
                         </View> : null }
                         {(!user) ? 
                         <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
@@ -103,8 +102,10 @@ const ShelterData = ({ history, location }) => {
                                  {shelterComments.map(comment => {
                                     return (
                                     <View key={comment.id}>
-                                        <Text style={styles.comment}>{date(comment.posted_at)}</Text>
-                                        <Text style={styles.commentUser}>{comment.username}</Text>
+                                        <View style={styles.flexing}>
+                                            <Text style={styles.commentUser}>{comment.username}</Text>
+                                            <Text style={styles.comment1}>{date(comment.posted_at)}</Text>
+                                        </View>
                                         <Text style={styles.comment}>{comment.comment}</Text>
                                     </View> )
                                 })} 
@@ -116,10 +117,33 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    comment1: {
+        color: "#3366CC",
+        position: "absolute",
+        right: 10,
+        fontWeight: "bold",
+        fontSize: 15
+    },
+    comment: {
+        fontSize: 18,
+        margin: 20
+    },
+    input: {
+        height: 40,
+        backgroundColor: "white", 
+        margin: 10
+    },
+    sub: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: "bold"
+    },
     commentUser: {
         fontSize: 15,
         color:"#3366CC",
-        marginLeft: 10
+        marginLeft: 10,
+        fontWeight: "bold"
     },
     first: {
         textAlign: "center",
@@ -145,7 +169,7 @@ const styles =  StyleSheet.create({
         width: 300,
         marginBottom: 25,
         borderRadius: 5,
-        paddingTop: 13
+        paddingTop: 12
     },
     logOrReg: {
         textAlign: "center",
@@ -157,7 +181,8 @@ const styles =  StyleSheet.create({
         textAlign: "center",
         fontSize: 16,
         fontWeight: "bold",
-        marginBottom: 20
+        marginBottom: 20,
+        marginTop: 10
     },
     page: {
         height: "100%",
