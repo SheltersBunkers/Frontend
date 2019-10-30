@@ -62,11 +62,10 @@ const ShelterData = ({ history, location }) => {
                     <Text style={styles.shelterName}>{shelter.name}</Text>
                     <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
                     { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
-
-                    {(!user) ?
-                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
-                            <Text style={styles.logOrReg1}>Login or register to comment</Text>
-                        </TouchableOpacity> : null } 
+                    {(!user) &&
+                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng })} style={styles.madeButton}>
+                            <Text style={styles.logOrReg}>Login or register to comment</Text>
+                        </TouchableOpacity>} 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>View Comments on Shelter</Text>
                         </TouchableOpacity>
@@ -79,7 +78,7 @@ const ShelterData = ({ history, location }) => {
                         
                 </View> : 
                 <View style={styles.container}>
-                    { user ? 
+                    { user && 
                         <View> 
                             <TextInput
                                 style={styles.input}
@@ -89,16 +88,16 @@ const ShelterData = ({ history, location }) => {
                                 /> 
                         <TouchableOpacity onPress={() => sendComment()} style={styles.madeButton} >
                             <Text style={styles.sub}>Submit Comment</Text>
-                        </TouchableOpacity> 
-                        </View> : null }
-                        {(!user) ? 
+                        </TouchableOpacity>  
+                        </View> }
+                        {(!user) ? <View> 
                         <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
                             <Text style={styles.logOrReg1}>Login or register to comment</Text>
-                        </TouchableOpacity> : null }
+                        </TouchableOpacity></View> : null }
                             <Text style={styles.comments}>COMMENTS</Text>
                         
                             <ScrollView style={styles.scrollView}>
-                            {(shelterComments.length === 0) ? <Text style={styles.first}>Be the first to comment on this Shelter</Text> : null}
+                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}
                                  {shelterComments.map(comment => {
                                     return (
                                     <View key={comment.id}>
@@ -110,6 +109,9 @@ const ShelterData = ({ history, location }) => {
                                     </View> )
                                 })} 
                             </ScrollView>
+                            <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton} >
+                            <Text style={styles.sub}>Back to Shelter Info</Text>
+                            </TouchableOpacity> 
                     </View> }
             </View>
     )
@@ -126,12 +128,13 @@ const styles =  StyleSheet.create({
     },
     comment: {
         fontSize: 18,
-        margin: 20
+        margin: 10,
+        marginLeft: 15
     },
     input: {
         height: 40,
         backgroundColor: "white", 
-        margin: 10
+        margin: 7
     },
     sub: {
         color: "white",
@@ -149,7 +152,7 @@ const styles =  StyleSheet.create({
         textAlign: "center",
         fontSize: 25,
         fontStyle: "italic",
-        marginTop: 20
+        marginTop: 15
     },
     scrollView: {
         marginLeft: 10,
@@ -158,7 +161,7 @@ const styles =  StyleSheet.create({
     comments: {
         fontSize: 20,
         marginLeft: 15,
-        marginTop: 10,
+        marginTop: 8,
         alignSelf: "center",
         fontWeight: "bold"
     },
@@ -169,7 +172,8 @@ const styles =  StyleSheet.create({
         width: 300,
         marginBottom: 25,
         borderRadius: 5,
-        paddingTop: 12
+        paddingTop: 12,
+        marginTop: 8
     },
     logOrReg: {
         textAlign: "center",
@@ -181,8 +185,8 @@ const styles =  StyleSheet.create({
         textAlign: "center",
         fontSize: 16,
         fontWeight: "bold",
-        marginBottom: 20,
-        marginTop: 10
+        marginBottom: 15,
+        marginTop: 8
     },
     page: {
         height: "100%",
@@ -213,7 +217,7 @@ const styles =  StyleSheet.create({
         right: 20
     },
     map: {
-        flex: 3
+        flex: 2
     },
     container: {
         flex: 3
