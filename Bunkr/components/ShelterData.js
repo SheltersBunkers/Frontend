@@ -57,8 +57,12 @@ const ShelterData = ({ history, location }) => {
                             title={shelter.name} />
                     </MapView> 
                 </View>
-                {(!showComments) ?
                 <View style={styles.container}>
+                <TouchableOpacity onPress={(showComments) ? () => setShowComments(!showComments) : () => history.push('/map')} style={styles.close}>
+                            <Text style={styles.closeText}>X</Text>
+                </TouchableOpacity>
+                {(!showComments) ?
+                <View>
                     <Text style={styles.shelterName}>{shelter.name}</Text>
                     <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
                     { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
@@ -69,15 +73,12 @@ const ShelterData = ({ history, location }) => {
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>View Comments on Shelter</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => history.push('/map')} style={styles.madeButton}>
-                            <Text style={styles.logOrReg}>Back to Map</Text>
-                        </TouchableOpacity> 
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Go Home</Text>
                         </TouchableOpacity>
                         
                 </View> : 
-                <View style={styles.container}>
+                <View>
                     { user && 
                         <View> 
                             <TextInput
@@ -109,16 +110,20 @@ const ShelterData = ({ history, location }) => {
                                     </View> )
                                 })} 
                             </ScrollView>
-                            <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton} >
-                            <Text style={styles.sub}>Back to Shelter Info</Text>
-                            </TouchableOpacity> 
                     </View> }
+                </View>
             </View>
     )
 }
 
 
 const styles =  StyleSheet.create({
+    closeText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginTop: 15,
+        marginLeft: "90%"
+    },
     comment1: {
         color: "#3366CC",
         position: "absolute",
@@ -186,7 +191,7 @@ const styles =  StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         marginBottom: 15,
-        marginTop: 8
+        marginTop: 30
     },
     page: {
         height: "100%",
@@ -233,14 +238,14 @@ const styles =  StyleSheet.create({
     },
     shelterName: {
         fontSize: 20,
-        marginTop: 10,
+        marginTop: 20,
         textAlign: "center",
         color: "#3366CC",
         fontWeight: "bold"
     },
     address: {
         textAlign: "center",
-        fontSize: 16,
+        fontSize: 15,
         color: "#3366CC"
     },
     distance: {
