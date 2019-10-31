@@ -5,6 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { get_locations } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
 
+
 const Map = ({ history }) => {
     const [ selectedShelter, setSelectedShelter ] = useState(null);
     const [ ready, setReady ] = useState(false);

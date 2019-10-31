@@ -2,6 +2,7 @@ import { axiosWithAuth } from "../utls/axiosWithAuth";
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 
+
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -30,16 +31,21 @@ export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
 export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
 export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
+export const DROP_USER = "DROP_USER";
+
+
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
 
     axios.post('https://bunkr-up.herokuapp.com/login', user)
     .then(res => {
+        console.log(res.data)
         saved = async () => {
             try {
-                await AsyncStorage.setItem('Bunkr_token', res.data.token);
+               AsyncStorage.setItem('Bunkr_token', res.data.token);
+                
             } catch (error){
-                console.log('failed to save token')
+                console.log('Error')
             }
         }
         saved();
@@ -61,12 +67,10 @@ export const register = (history, user, shelter) => dispatch => {
     }
     axios.post('https://bunkr-up.herokuapp.com/login/register', clean)
     .then(res => {
-        saved = async () => {
-            try {
-                await AsyncStorage.setItem('Bunkr_token', res.data.token);
-            } catch (error){
-                console.log('failed to save token')
-            }
+        try {
+            AsyncStorage.setItem('bunkr_token', res.data.token)
+        }catch (error) {
+            console.log(error)
         }
         saved();
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
@@ -92,11 +96,11 @@ export const get_locations = () => dispatch => {
 
 
 export const get_comments_by_id = (id) => dispatch => {
+
     dispatch({ type: FETCHING_COMMENTS_BY_SHELTER_ID })
-    
+
     axios.get(`https://bunkr-up.herokuapp.com/comments/${id}`)
         .then(res => {
-            console.log(res.data)
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
         })
         .catch(err => {
@@ -106,10 +110,13 @@ export const get_comments_by_id = (id) => dispatch => {
 }
 
 export const post_comment_to_shelter = (id, message, userId) => dispatch => {
+
+
     dispatch({ type: POSTING })
     find = async () => {
         try {
              let token = await AsyncStorage.getItem('Bunkr_token');
+             
              const messageObj = {
              comment: message,
              user_id: userId,
@@ -136,6 +143,7 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
 
 export const send_feedback = (feedback) => dispatch => {
     dispatch({ type: SENDING_FEEDBACK })
+
     const clean = {
         address: feedback.address,
         contactNum: feedback.contactNum,
@@ -154,4 +162,6 @@ export const send_feedback = (feedback) => dispatch => {
 } 
 
 
-
+export const dropUser = () => dispatch => {
+    dispatch({ type: DROP_USER });
+}

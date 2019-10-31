@@ -16,7 +16,8 @@ import {
     POST_TO_SHELTER_FAILURE,
     SENDING_FEEDBACK,
     SENDING_FEEDBACK_SUCCESS,
-    SENDING_FEEDBACK_FAILURE 
+    SENDING_FEEDBACK_FAILURE,
+    DROP_USER 
 } from '../actions/index.js';
 
 
@@ -146,6 +147,11 @@ export default reducer = (state = initialState, action) => {
                 sendingFeedback: false,
                 feedbackResponse: null
             } 
+        case DROP_USER:
+            return {
+                ...state,
+                user: null
+            }
         default:
             return state
     }
