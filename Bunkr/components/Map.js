@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
 import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
-import { get_locations } from '../actions'
+import { get_locations, ddropUserropUser } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
 
 
@@ -17,6 +17,7 @@ const Map = ({ history }) => {
     const [ showShelter, setShowShelter ] = useState(false);
     const locations = useSelector(state => state.locations);
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
         let geoOptions={
@@ -32,6 +33,15 @@ const Map = ({ history }) => {
     useEffect(() => {
         dispatch(get_locations())
     }, [])
+
+    useEffect(() =>{
+        if (user) {
+            if (user.expiration < Date.now()) {
+            dispatch(dropUser());
+        }
+        }
+        
+    })
 
     callGeo = () => { //going to use to call ever so often to get location update.// escpecially if speed is greater than 1.
         let geoOptions={
