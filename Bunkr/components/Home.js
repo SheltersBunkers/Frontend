@@ -3,7 +3,7 @@ import { View, Text, Button, ActivityIndicator, StyleSheet, ImageBackground, Saf
 import { useSelector, useDispatch }  from 'react-redux';
 import {AsyncStorage} from 'react-native';
 import tornado from '../assets/tornado.png';
-import { dropUser } from '../actions'
+import { verify_token } from '../actions'
 
 
 const Home = ({ history }) => {
@@ -11,13 +11,8 @@ const Home = ({ history }) => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    useEffect(() =>{
-        if (user) {
-            if (user.expiration < Date.now()) {
-            dispatch(dropUser());
-        }
-        }
-        
+    useEffect(() => {
+        dispatch(verify_token(user))
     })
 
     return (

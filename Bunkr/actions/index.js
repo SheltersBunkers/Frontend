@@ -31,7 +31,9 @@ export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
 export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
 export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
-export const DROP_USER = "DROP_USER";
+export const VERIFYING = "VERIFYING";
+export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
+export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
 
 
 export const login = (history, user, shelter) => dispatch => {
@@ -53,6 +55,7 @@ export const login = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
+        console.log(err)
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
@@ -126,7 +129,6 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
             return axiosWithAuth(token)
                 .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
                 .then(res => {
-                    console.log(res.data)
                     dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
                 })
                 .catch(err => {
@@ -159,9 +161,43 @@ export const send_feedback = (feedback) => dispatch => {
         .catch(err => {
             dispatch({ type: SENDING_FEEDBACK_FAILURE, payload: err })
         })
-} 
+}
 
 
-export const dropUser = () => dispatch => {
-    dispatch({ type: DROP_USER });
+export const verify_token = (user) => dispatch => {
+    dispatch({ type: VERIFYING})
+    async function tokes() {
+        try {
+            let token = await AsyncStorage.getItem('bunkr_token');
+            let tokObj = { token: token }
+             if (token) {
+                axios.post('https://bunkr-up.herokuapp.com/verify', tokObj )
+                    .then(res => {
+                        try {
+                            AsyncStorage.setItem('bunkr_token', res.data.token)
+                            if (!user){
+                                dispatch({ type: VERIFY_TOKEN_SUCCESS, payload: res.data })
+                            }
+                            
+                        }catch (error) {
+                            AsyncStorage.removeItem('bunkr_token')
+                        }
+                        
+                    })
+                    .catch(err => {
+                        AsyncStorage.removeItem('bunkr_token')
+                        dispatch({ type: VERIFY_TOKEN_FAILED })
+                    })
+            }
+        }
+        catch {
+            AsyncStorage.removeItem('bunkr_token')
+            dispatch({ type: VERIFY_TOKEN_FAILED })
+        }
+
+    }
+    tokes();
+    
+
+   
 }

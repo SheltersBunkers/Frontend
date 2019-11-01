@@ -17,7 +17,9 @@ import {
     SENDING_FEEDBACK,
     SENDING_FEEDBACK_SUCCESS,
     SENDING_FEEDBACK_FAILURE,
-    DROP_USER 
+    VERIFYING,
+    VERIFY_TOKEN_SUCCESS,
+    VERIFY_TOKEN_FAILED 
 } from '../actions/index.js';
 
 
@@ -147,7 +149,16 @@ export default reducer = (state = initialState, action) => {
                 sendingFeedback: false,
                 feedbackResponse: null
             } 
-        case DROP_USER:
+        case VERIFYING:
+            return {
+                ...state
+            }
+        case VERIFY_TOKEN_SUCCESS:
+            return {
+                ...state,
+                user: action.payload
+            }
+        case VERIFY_TOKEN_FAILED:
             return {
                 ...state,
                 user: null
