@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
-import { post_comment_to_shelter, get_comments_by_id } from '../actions';
+import { post_comment_to_shelter, get_comments_by_id, dropUser } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import date from './date.js'
 
@@ -31,6 +31,14 @@ const ShelterData = ({ history, location }) => {
         dispatch(get_comments_by_id(shelter.id))
     }, [failed]);
 
+    useEffect(() =>{
+        if (user) {
+            if (user.expiration < Date.now()) {
+            dispatch(dropUser());
+        }
+        }
+        
+    })
 
     sendComment = () => {
         if (message !== ''){

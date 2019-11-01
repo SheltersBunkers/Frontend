@@ -16,7 +16,10 @@ import {
     POST_TO_SHELTER_FAILURE,
     SENDING_FEEDBACK,
     SENDING_FEEDBACK_SUCCESS,
-    SENDING_FEEDBACK_FAILURE 
+    SENDING_FEEDBACK_FAILURE,
+    VERIFYING,
+    VERIFY_TOKEN_SUCCESS,
+    VERIFY_TOKEN_FAILED 
 } from '../actions/index.js';
 
 
@@ -146,6 +149,20 @@ export default reducer = (state = initialState, action) => {
                 sendingFeedback: false,
                 feedbackResponse: null
             } 
+        case VERIFYING:
+            return {
+                ...state
+            }
+        case VERIFY_TOKEN_SUCCESS:
+            return {
+                ...state,
+                user: action.payload
+            }
+        case VERIFY_TOKEN_FAILED:
+            return {
+                ...state,
+                user: null
+            }
         default:
             return state
     }

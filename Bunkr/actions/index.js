@@ -2,6 +2,7 @@ import { axiosWithAuth } from "../utls/axiosWithAuth";
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 
+
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -30,16 +31,23 @@ export const SENDING_FEEDBACK = "SENDING_FEEDBACK";
 export const SENDING_FEEDBACK_SUCCESS = "SENDING_FEEDBACK_SUCCESS ";
 export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 
+export const VERIFYING = "VERIFYING";
+export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
+export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
+
+
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
 
     axios.post('https://bunkr-up.herokuapp.com/login', user)
     .then(res => {
+        console.log(res.data)
         saved = async () => {
             try {
-                await AsyncStorage.setItem('Bunkr_token', res.data.token);
+               AsyncStorage.setItem('Bunkr_token', res.data.token);
+                
             } catch (error){
-                console.log('failed to save token')
+                console.log('Error')
             }
         }
         saved();
@@ -47,6 +55,7 @@ export const login = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
+        console.log(err)
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
@@ -61,12 +70,10 @@ export const register = (history, user, shelter) => dispatch => {
     }
     axios.post('https://bunkr-up.herokuapp.com/login/register', clean)
     .then(res => {
-        saved = async () => {
-            try {
-                await AsyncStorage.setItem('Bunkr_token', res.data.token);
-            } catch (error){
-                console.log('failed to save token')
-            }
+        try {
+            AsyncStorage.setItem('bunkr_token', res.data.token)
+        }catch (error) {
+            console.log(error)
         }
         saved();
         dispatch({ type: REGISTERING_SUCCESS, payload: res.data })
@@ -92,11 +99,11 @@ export const get_locations = () => dispatch => {
 
 
 export const get_comments_by_id = (id) => dispatch => {
+
     dispatch({ type: FETCHING_COMMENTS_BY_SHELTER_ID })
-    
+
     axios.get(`https://bunkr-up.herokuapp.com/comments/${id}`)
         .then(res => {
-            console.log(res.data)
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
         })
         .catch(err => {
@@ -106,10 +113,13 @@ export const get_comments_by_id = (id) => dispatch => {
 }
 
 export const post_comment_to_shelter = (id, message, userId) => dispatch => {
+
+
     dispatch({ type: POSTING })
     find = async () => {
         try {
              let token = await AsyncStorage.getItem('Bunkr_token');
+             
              const messageObj = {
              comment: message,
              user_id: userId,
@@ -119,7 +129,6 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
             return axiosWithAuth(token)
                 .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
                 .then(res => {
-                    console.log(res.data)
                     dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
                 })
                 .catch(err => {
@@ -136,6 +145,7 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
 
 export const send_feedback = (feedback) => dispatch => {
     dispatch({ type: SENDING_FEEDBACK })
+
     const clean = {
         address: feedback.address,
         contactNum: feedback.contactNum,
@@ -151,7 +161,43 @@ export const send_feedback = (feedback) => dispatch => {
         .catch(err => {
             dispatch({ type: SENDING_FEEDBACK_FAILURE, payload: err })
         })
-} 
+}
 
 
+export const verify_token = (user) => dispatch => {
+    dispatch({ type: VERIFYING})
+    async function tokes() {
+        try {
+            let token = await AsyncStorage.getItem('bunkr_token');
+            let tokObj = { token: token }
+             if (token) {
+                axios.post('https://bunkr-up.herokuapp.com/verify', tokObj )
+                    .then(res => {
+                        try {
+                            AsyncStorage.setItem('bunkr_token', res.data.token)
+                            if (!user){
+                                dispatch({ type: VERIFY_TOKEN_SUCCESS, payload: res.data })
+                            }
+                            
+                        }catch (error) {
+                            AsyncStorage.removeItem('bunkr_token')
+                        }
+                        
+                    })
+                    .catch(err => {
+                        AsyncStorage.removeItem('bunkr_token')
+                        dispatch({ type: VERIFY_TOKEN_FAILED })
+                    })
+            }
+        }
+        catch {
+            AsyncStorage.removeItem('bunkr_token')
+            dispatch({ type: VERIFY_TOKEN_FAILED })
+        }
 
+    }
+    tokes();
+    
+
+   
+}
