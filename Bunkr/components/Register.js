@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20
     },
     top: {
-        marginTop: Platform.OS === "ios" ? 84 : 40
+        marginTop: 40
     },
     reg: {
         fontSize: 50,

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     company: {
         fontSize: 50,
-        marginTop: 40,
+        marginTop: Platform.OS === "ios" ? 19 : 40,
         textAlign: "center",
         color: "#3366CC"
     },

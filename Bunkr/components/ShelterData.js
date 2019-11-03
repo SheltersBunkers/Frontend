@@ -28,7 +28,6 @@ const ShelterData = ({ history, location }) => {
     }, [])
     
     useEffect(() =>{
-        console.log('fired')
         dispatch(get_comments_by_id(shelter.id))
     }, [failed, showComments]);
 
