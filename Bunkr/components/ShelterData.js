@@ -204,7 +204,7 @@ const styles =  StyleSheet.create({
     page: {
         height: "100%",
         width: "100%",
-        backgroundColor: "#D0D0D0"
+        backgroundColor: "#E8E8E8"
     },
     co: {
         flex: 4

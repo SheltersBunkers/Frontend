@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     page: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#D0D0D0"
+        backgroundColor: "#E8E8E8"
        },
     safe: {
         alignItems: "center",
-        backgroundColor: "#E8E8E8",
-        borderRadius: 30,
+        backgroundColor: "#F8F8F8",
+        borderRadius: 10,
         paddingTop: 40,
         paddingBottom: 40,
         marginLeft: 30,

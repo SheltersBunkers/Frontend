@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     page: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#D0D0D0"
+        backgroundColor: "#E8E8E8"
     },
     madeButtons: {
         marginTop: 10,
