@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 
 
 const Disclaimer = ({ history }) => {
@@ -24,7 +24,7 @@ const Disclaimer = ({ history }) => {
 
 const styles = StyleSheet.create({
     madeButtons: {
-        marginTop: 30,
+        marginTop: 15,
         width: 200,
         height: 60,
         borderRadius: 10,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     company: {
         fontSize: 50,
-        marginTop: 40,
+        marginTop:  Platform.OS === "ios" ? 15 : 40,
         textAlign: "center",
         color: "#3366CC"
     },
