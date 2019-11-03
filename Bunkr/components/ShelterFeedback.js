@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         color: "#3366CC"
     },
     top: {
-        marginTop: Platform.OS === "ios" ? 84 : 40
+        marginTop: 40
     },
     reg: {
         fontSize: 50,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     madeButtons: {
         marginTop: 20,
         width: 200,
-        height: 60,
+        height: Platform.OS === "ios"? 40 : 60,
         textAlign: "center",
         borderRadius: 5,
         backgroundColor: "#3366CC"
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     center: {
         textAlign: "center",
         fontSize: 20,
-        paddingTop: Platform.OS === "ios" ? 18 : 15,
+        paddingTop: Platform.OS === "ios" ? 8 : 15,
         color: "white"
     }
 })
