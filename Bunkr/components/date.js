@@ -33,9 +33,82 @@ const date = (timeStamp) => {
         amOrPm = 'pm'
     }
 
+    // convert utc to central...
+    timeHour = timeHour.toString();
+    if (timeHour === '12'){
+        timeHour = '6'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '1') {
+        timeHour = '7'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '2'){
+        timeHour = '8'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '3'){
+        timeHour = '9'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '4'){
+        timeHour = '10'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '5'){
+        timeHour = '11'
+        if (amOrPm === 'pm'){
+            amOrPm = 'am'
+        } else {
+            amOrPm = 'pm'
+        }
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else if (timeHour === '6'){
+        timeHour = '12'
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    } else {
+        timeHour = (parseInt(timeHour) - 6).toString();
+        if (dayOfMonth > 1) {
+            dayOfMonth -= 1
+        }
+    }
+ 
 
-
-    return (month + '' + dayOfMonth + ', ' + year + ' ' + timeHour + ':' + timeMinute +  ' '+amOrPm)
+    return (month + '' + dayOfMonth + ', ' + year + ' ' + timeHour + ':' + timeMinute +  ' '+ amOrPm)
 }
 
 

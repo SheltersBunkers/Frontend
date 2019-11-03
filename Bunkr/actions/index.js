@@ -34,7 +34,7 @@ export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 export const VERIFYING = "VERIFYING";
 export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
 export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
-
+export const CHANGE_REPSONSE = "CHANGE_REPSONSE";
 
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
@@ -54,20 +54,17 @@ export const login = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
-        console.log(err)
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
 }
 
 export const register = (history, user, shelter) => dispatch => {
     dispatch({ type: REGISTERING })
-    console.log(user)
     let clean = {
         username: user.username,
         password: user.password,
         email: user.email
     }
-    console.log(clean)
     axios.post('https://bunkr-up.herokuapp.com/login/register', clean)
     .then(res => {
         try {
@@ -80,7 +77,6 @@ export const register = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
-        console.log(err)
         dispatch({ type: REGISTERING_FAILURE, payload: err })
     })
 }
@@ -107,13 +103,11 @@ export const get_comments_by_id = (id) => dispatch => {
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
         })
         .catch(err => {
-            console.log('error getting comments')
             dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_FAILURE, payload: err })
         })
 }
 
 export const post_comment_to_shelter = (id, message, userId) => dispatch => {
-
     dispatch({ type: POSTING })
     find = async () => {
         try {
@@ -168,7 +162,6 @@ export const verify_token = (user) => dispatch => {
         try {
             let token = await AsyncStorage.getItem('bunkr_token');
             let tokObj = { token: token }
-            console.log(token)
              if (token) {
                 axios.post('https://bunkr-up.herokuapp.com/verify', tokObj )
                     .then(res => {
@@ -199,4 +192,8 @@ export const verify_token = (user) => dispatch => {
     
 
    
+}
+
+export const changeResponse = () => dispatch => {
+    dispatch({ type: CHANGE_REPSONSE })
 }

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     center: {
         textAlign: "center",
         fontSize: 20,
-        paddingTop: 15,
+        paddingTop: Platform.OS === "ios" ? 18 : 15,
         color: "white"
     },
     goHome: {
