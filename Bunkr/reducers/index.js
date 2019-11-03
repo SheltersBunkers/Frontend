@@ -19,7 +19,8 @@ import {
     SENDING_FEEDBACK_FAILURE,
     VERIFYING,
     VERIFY_TOKEN_SUCCESS,
-    VERIFY_TOKEN_FAILED 
+    VERIFY_TOKEN_FAILED,
+    CHANGE_REPSONSE
 } from '../actions/index.js';
 
 
@@ -162,6 +163,11 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: null
+            }
+        case CHANGE_REPSONSE:
+            return {
+                ...state,
+                feedbackResponse: null
             }
         default:
             return state

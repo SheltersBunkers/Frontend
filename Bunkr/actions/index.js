@@ -34,7 +34,7 @@ export const SENDING_FEEDBACK_FAILURE = "SENDING_FEEDBACK_FAILURE";
 export const VERIFYING = "VERIFYING";
 export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
 export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
-
+export const CHANGE_REPSONSE = "CHANGE_REPSONSE";
 
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
@@ -199,4 +199,8 @@ export const verify_token = (user) => dispatch => {
     
 
    
+}
+
+export const changeResponse = () => dispatch => {
+    dispatch({ type: CHANGE_REPSONSE })
 }

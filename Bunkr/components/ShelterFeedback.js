@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { send_feedback } from '../actions';
+import { send_feedback, changeResponse } from '../actions';
 
 
 const validationSchema = yup.object().shape({
@@ -20,6 +20,9 @@ const ShelterFeedback = ({ history }) => {
     const sendingFeedback = useSelector(state => state.sendingFeedback);
     const response = useSelector(state => state.feedbackResponse)
 
+    useEffect(() => {
+        dispatch(changeResponse())
+    },[])
     return (
         <View style={styles.page}>
             <View style={styles.top}>
