@@ -89,8 +89,7 @@ const styles = StyleSheet.create({
     safe: {
         alignItems: "center",
         borderRadius: 10,
-        // paddingTop: 20,
-        paddingTop: Platform.OS === "ios" ? 40 : 10,
+        paddingTop: 20,
         marginLeft: 30,
         marginRight: 30,
         borderColor: "black",
