@@ -1,8 +1,8 @@
 
 
 const date = (timeStamp) => {
-    let day = timeStamp.split(' ')[0];
-    let time = timeStamp.split(' ')[1];
+    let day = timeStamp.split('T')[0];
+    let time = timeStamp.split('T')[1];
 
     let month = day.split('-')[1];
     let year = day.split('-')[0];
