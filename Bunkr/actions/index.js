@@ -114,24 +114,22 @@ export const get_comments_by_id = (id) => dispatch => {
 
 export const post_comment_to_shelter = (id, message, userId) => dispatch => {
 
-
     dispatch({ type: POSTING })
     find = async () => {
         try {
-             let token = await AsyncStorage.getItem('Bunkr_token');
+            let token = await AsyncStorage.getItem('Bunkr_token');
              
-             const messageObj = {
-             comment: message,
-             user_id: userId,
-             shelter_id: id
+            const messageObj = {
+                comment: message,
+                user_id: userId
             }
+  
             return axiosWithAuth(token)
                 .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
                 .then(res => {
                     dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
                 })
                 .catch(err => {
-                    console.log(err)
                     dispatch({ type: POST_TO_SHELTER_FAILURE, payload: token })
                 })
         } catch (error){
@@ -170,6 +168,7 @@ export const verify_token = (user) => dispatch => {
         try {
             let token = await AsyncStorage.getItem('bunkr_token');
             let tokObj = { token: token }
+            console.log(token)
              if (token) {
                 axios.post('https://bunkr-up.herokuapp.com/verify', tokObj )
                     .then(res => {
