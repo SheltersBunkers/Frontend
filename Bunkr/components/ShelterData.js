@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
@@ -28,8 +28,9 @@ const ShelterData = ({ history, location }) => {
     }, [])
     
     useEffect(() =>{
+        console.log('fired')
         dispatch(get_comments_by_id(shelter.id))
-    }, [failed]);
+    }, [failed, showComments]);
 
     useEffect(() =>{
         if (user) {
@@ -153,7 +154,8 @@ const styles =  StyleSheet.create({
         color: "white",
         textAlign: "center",
         fontSize: 16,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingTop: Platform.OS === "ios" ? 3 : 0
     },
     commentUser: {
         fontSize: 15,
@@ -192,7 +194,8 @@ const styles =  StyleSheet.create({
         textAlign: "center",
         fontSize: 16,
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        paddingTop: Platform.OS === "ios" ? 3 : 0,
     },
     logOrReg1: {
         textAlign: "center",
