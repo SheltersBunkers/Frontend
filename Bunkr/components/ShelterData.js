@@ -43,7 +43,7 @@ const ShelterData = ({ history, location }) => {
     sendComment = () => {
         if (message !== ''){
             dispatch(post_comment_to_shelter(shelter.id, message, user.id));
-            setMessage('');
+            setMessage('')
         }
         
     }
