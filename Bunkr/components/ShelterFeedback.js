@@ -54,7 +54,7 @@ const ShelterFeedback = ({ history }) => {
                 )}
             </Formik>
             <View style={{flexDirection: "row", marginTop: 50}}>
-                <TouchableOpacity onPress={() => history.push('/')} style={styles.buttons}><Text style={styles.blueColor}>Go Home</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => history.push('/')} style={styles.buttons}><Text style={styles.blueColor}>Home</Text></TouchableOpacity>
             </View>
     </SafeAreaView>
     </View>
@@ -63,7 +63,8 @@ const ShelterFeedback = ({ history }) => {
 
 const styles = StyleSheet.create({
     blueColor: {
-        color: "#3366CC"
+        color: "#3366CC",
+        textAlign: "center"
     },
     top: {
         marginTop: 40
