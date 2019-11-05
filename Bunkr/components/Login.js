@@ -38,7 +38,7 @@ const Login = ({ history, location }) => {
                     <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
                     {loggingIn ? 
                         <ActivityIndicator /> : 
-                        <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>LOGIN</Text></TouchableOpacity>}
+                        <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Login</Text></TouchableOpacity>}
                     </>
                     
                 )}
@@ -48,7 +48,7 @@ const Login = ({ history, location }) => {
                 <TouchableOpacity onPress={() => history.push('/register', shelter)} style={styles.buttons}><Text style={styles.blueColor}>  Register Here!</Text></TouchableOpacity>
             </View>
                 <TouchableOpacity onPress={() => history.push('/')} style={styles.goHome}>
-                    <Text style={styles.blueColor}>Go Home</Text>
+                    <Text style={styles.blueColor}>Home</Text>
             </TouchableOpacity>
             
     </SafeAreaView>

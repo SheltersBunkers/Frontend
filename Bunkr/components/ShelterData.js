@@ -82,7 +82,7 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.logOrReg}>View Comments on Shelter</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
-                            <Text style={styles.logOrReg}>Go Home</Text>
+                            <Text style={styles.logOrReg}>Home</Text>
                         </TouchableOpacity>
                         
                 </View> : 
@@ -91,7 +91,7 @@ const ShelterData = ({ history, location }) => {
                         <View> 
                             <TextInput
                                 style={styles.input}
-                                placeholder="Insert Message here"
+                                placeholder="    Type comment"
                                 onChangeText={(text) => setMessage(text)}
                                 value={message}
                                 /> 
