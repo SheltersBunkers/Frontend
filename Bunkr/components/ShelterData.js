@@ -5,9 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
-import { post_comment_to_shelter, get_comments_by_id, dropUser } from '../actions';
+import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import date from './date.js'
+
+// import { startSocketIO } from './socketIO';
+import socketIO from 'socket.io-client';
+
+
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
@@ -18,6 +23,10 @@ const ShelterData = ({ history, location }) => {
     const shelterComments = useSelector( state => state.comments );
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
+    const [ socketComments, setSocketComments ] = useState([]);
+
+    let socket = socketIO('http://192.168.1.79:5001', { transports: ['websocket'], jsonp: false });
+    
 
     useEffect(() => {
         setDistance(getDistance(
@@ -28,22 +37,26 @@ const ShelterData = ({ history, location }) => {
     }, [])
     
     useEffect(() =>{
-        dispatch(get_comments_by_id(shelter.id))
+        dispatch(get_comments_by_id(shelter.id));
+        setSocketComments([]);
     }, [failed, showComments]);
 
-    useEffect(() =>{
-        if (user) {
-            if (user.expiration < Date.now()) {
-            dispatch(dropUser());
-        }
-        }
-        
-    })
+    useEffect(() => {
+        if (showComments){
+            socket.connect();
+            socket.on(`${shelter.name}`, (msg) => {
+                let newSocketComments = socketComments;
+                newSocketComments.unshift(msg);
+                setSocketComments(newSocketComments);
+            })}
+    }, [showComments])
 
     sendComment = () => {
         if (message !== ''){
             dispatch(post_comment_to_shelter(shelter.id, message, user.id));
+            socket.emit('shelter', { user: user.username, message: message, shelter: shelter.name });
             setMessage('')
+            
         }
         
     }
@@ -106,7 +119,17 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.comments}>COMMENTS</Text>
                         
                             <ScrollView style={styles.scrollView}>
-                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}
+                            
+                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
+                                return ( 
+                                    <View key={Math.random()}>
+                                        <View style={styles.flexing}>
+                                            <Text style={styles.commentUser}>{comment.user}</Text>
+                                            <Text style={styles.comment1}>Nov 2019</Text>
+                                        </View>
+                                        <Text style={styles.comment}>{comment.message}</Text>
+                                    </View> )
+                            })}
                                  {shelterComments.map(comment => {
                                     return (
                                     <View key={comment.id}>
