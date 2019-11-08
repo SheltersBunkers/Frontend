@@ -5,9 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
-import { post_comment_to_shelter, get_comments_by_id, dropUser } from '../actions';
+import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import date from './date.js'
+
+import socketIO from 'socket.io-client';
+
+
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
@@ -18,6 +22,12 @@ const ShelterData = ({ history, location }) => {
     const shelterComments = useSelector( state => state.comments );
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
+    const [ socketComments, setSocketComments ] = useState([]);
+    const [ new1, setNew1 ] = useState(false);
+
+
+    let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
+    
 
     useEffect(() => {
         setDistance(getDistance(
@@ -28,24 +38,34 @@ const ShelterData = ({ history, location }) => {
     }, [])
     
     useEffect(() =>{
-        dispatch(get_comments_by_id(shelter.id))
+        dispatch(get_comments_by_id(shelter.id));
+        setSocketComments([]);
     }, [failed, showComments]);
 
-    useEffect(() =>{
-        if (user) {
-            if (user.expiration < Date.now()) {
-            dispatch(dropUser());
-        }
-        }
-        
-    })
+    useEffect(() => {
+        if (showComments){
+            socket.connect();
+            socket.on(`${shelter.name}`, (msg) => {
+                let newSocketComments = socketComments;
+                newSocketComments.unshift(msg);
+                setSocketComments(newSocketComments);
+                rerun();
+            })}
+    }, [showComments])
 
     sendComment = () => {
         if (message !== ''){
             dispatch(post_comment_to_shelter(shelter.id, message, user.id));
+            socket.emit('shelter', { user: user.username, message: message, shelter: shelter.name });
             setMessage('')
+            
         }
         
+    }
+
+    rerun = () => { //put in to toggle state and rerender when using socketio cause comments weren't always rendering to screen when they should have been cause state was changing.
+        setNew1(true);
+        setNew1(false);
     }
 
     return (
@@ -79,7 +99,7 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.logOrReg}>Login or register to comment</Text>
                         </TouchableOpacity>} 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
-                            <Text style={styles.logOrReg}>View Comments on Shelter</Text>
+                            <Text style={styles.logOrReg}>View comments on shelter</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
@@ -96,7 +116,7 @@ const ShelterData = ({ history, location }) => {
                                 value={message}
                                 /> 
                         <TouchableOpacity onPress={() => sendComment()} style={styles.madeButton} >
-                            <Text style={styles.sub}>Submit Comment</Text>
+                            <Text style={styles.sub}>Submit comment</Text>
                         </TouchableOpacity>  
                         </View> }
                         {(!user) ? <View> 
@@ -106,7 +126,17 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.comments}>COMMENTS</Text>
                         
                             <ScrollView style={styles.scrollView}>
-                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}
+                            
+                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
+                                return ( 
+                                    <View key={Math.random()}>
+                                        <View style={styles.flexing}>
+                                            <Text style={styles.commentUser}>{comment.user}</Text>
+                                            <Text style={styles.comment1}>Nov 2019</Text>
+                                        </View>
+                                        <Text style={styles.comment}>{comment.message}</Text>
+                                    </View> )
+                            })}
                                  {shelterComments.map(comment => {
                                     return (
                                     <View key={comment.id}>
