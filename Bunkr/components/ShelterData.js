@@ -9,7 +9,6 @@ import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import date from './date.js'
 
-// import { startSocketIO } from './socketIO';
 import socketIO from 'socket.io-client';
 
 
@@ -24,8 +23,10 @@ const ShelterData = ({ history, location }) => {
     const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
     const [ socketComments, setSocketComments ] = useState([]);
+    const [ new1, setNew1 ] = useState(false);
 
-    let socket = socketIO('http://192.168.1.79:5001', { transports: ['websocket'], jsonp: false });
+
+    let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
 
     useEffect(() => {
@@ -48,6 +49,7 @@ const ShelterData = ({ history, location }) => {
                 let newSocketComments = socketComments;
                 newSocketComments.unshift(msg);
                 setSocketComments(newSocketComments);
+                rerun();
             })}
     }, [showComments])
 
@@ -59,6 +61,11 @@ const ShelterData = ({ history, location }) => {
             
         }
         
+    }
+
+    rerun = () => { //put in to toggle state and rerender when using socketio cause comments weren't always rendering to screen when they should have been cause state was changing.
+        setNew1(true);
+        setNew1(false);
     }
 
     return (
@@ -92,7 +99,7 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.logOrReg}>Login or register to comment</Text>
                         </TouchableOpacity>} 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
-                            <Text style={styles.logOrReg}>View Comments on Shelter</Text>
+                            <Text style={styles.logOrReg}>View comments on shelter</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
@@ -109,7 +116,7 @@ const ShelterData = ({ history, location }) => {
                                 value={message}
                                 /> 
                         <TouchableOpacity onPress={() => sendComment()} style={styles.madeButton} >
-                            <Text style={styles.sub}>Submit Comment</Text>
+                            <Text style={styles.sub}>Submit comment</Text>
                         </TouchableOpacity>  
                         </View> }
                         {(!user) ? <View> 
