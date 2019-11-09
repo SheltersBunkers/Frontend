@@ -4,7 +4,7 @@ import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
 import { get_locations, ddropUserropUser } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
-
+import bunker from '../assets/bunker.png';
 
 const Map = ({ history }) => {
     const [ selectedShelter, setSelectedShelter ] = useState(null);
@@ -71,7 +71,7 @@ const Map = ({ history }) => {
        
         <View>
         {/* <Button onPress={() => history.push("/")} title="Go Back" /> */}
-        {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code, your_lat: where.lat, your_lng: where.lng }) :  
+        {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code, your_lat: where.lat, your_lng: where.lng, description: selectedShelter.description || null }) :  
         (where.lat && where.lng) ?
             <MapView
                 style={styles.map}

@@ -44,14 +44,17 @@ const ShelterData = ({ history, location }) => {
 
     useEffect(() => {
         if (showComments){
-            socket.connect();
+            connect()
+    }}, [showComments]);
+
+    connect = () => {
+        socket.connect();
             socket.on(`${shelter.name}`, (msg) => {
                 let newSocketComments = socketComments;
                 newSocketComments.unshift(msg);
                 setSocketComments(newSocketComments);
                 rerun();
             })}
-    }, [showComments])
 
     sendComment = () => {
         if (message !== ''){
@@ -95,7 +98,7 @@ const ShelterData = ({ history, location }) => {
                     <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
                     { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                     {(!user) &&
-                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng })} style={styles.madeButton}>
+                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng, description: shelter.description })} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Login or register to comment</Text>
                         </TouchableOpacity>} 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
@@ -104,7 +107,7 @@ const ShelterData = ({ history, location }) => {
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
                         </TouchableOpacity>
-                        
+                        { shelter.description && <Text style={styles.description}>{shelter.description}</Text> }
                 </View> : 
                 <View>
                     { user && 
@@ -156,10 +159,16 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    description: {
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
+        fontSize: 15
+    },
     closeText: {
         fontSize: 20,
         fontWeight: "bold",
-        marginTop: 15,
+        marginTop: 8,
         marginLeft: "90%"
     },
     comment1: {
@@ -205,7 +214,7 @@ const styles =  StyleSheet.create({
     comments: {
         fontSize: 20,
         marginLeft: 15,
-        marginTop: 8,
+        marginTop: -10,
         alignSelf: "center",
         fontWeight: "bold"
     },
