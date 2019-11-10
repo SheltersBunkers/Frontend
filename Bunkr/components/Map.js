@@ -90,6 +90,7 @@ const Map = ({ history }) => {
                     key={marker.id}
                     coordinate={{latitude: marker.lat, longitude: marker.lng}}
                     title={marker.name}
+                    pinColor={"blue"}
                     onPress={() => showIndividualShelter(marker) }
                 /> 
                     

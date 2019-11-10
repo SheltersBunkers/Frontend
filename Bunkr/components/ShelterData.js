@@ -85,6 +85,7 @@ const ShelterData = ({ history, location }) => {
                         >
                         <Marker 
                             coordinate={{latitude: shelter.lat, longitude: shelter.lng}}
+                            pinColor={"blue"}
                             title={shelter.name} />
                     </MapView> 
                 </View>
