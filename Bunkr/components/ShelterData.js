@@ -24,7 +24,7 @@ const ShelterData = ({ history, location }) => {
     const [ showComments, setShowComments ] = useState(false);
     const [ socketComments, setSocketComments ] = useState([]);
     const [ new1, setNew1 ] = useState(false);
-
+    const [ someoneTyping, setSomeoneTyping ] = useState(false);
 
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
@@ -45,6 +45,8 @@ const ShelterData = ({ history, location }) => {
     useEffect(() => {
         if (showComments){
             connect()
+    } else {
+        setSomeoneTyping(false)
     }}, [showComments]);
 
     connect = () => {
@@ -52,8 +54,16 @@ const ShelterData = ({ history, location }) => {
             socket.on(`${shelter.name}`, (msg) => {
                 let newSocketComments = socketComments;
                 newSocketComments.unshift(msg);
-                setSocketComments(newSocketComments);
+                setSocketComments(newSocketComments)
+                setSomeoneTyping(false);
                 rerun();
+            })
+            socket.on(`${shelter.name}/typing`, (msg) => {
+                if (!user && msg.typing) {
+                    setSomeoneTyping(true);
+                } else if (msg.user !== user.username && msg.typing){
+                    setSomeoneTyping(true);
+                }
             })}
 
     sendComment = () => {
@@ -69,6 +79,12 @@ const ShelterData = ({ history, location }) => {
     rerun = () => { //put in to toggle state and rerender when using socketio cause comments weren't always rendering to screen when they should have been cause state was changing.
         setNew1(true);
         setNew1(false);
+    }
+    if (message.length > 0){
+        socket.emit('typing', { user: user.username, shelter: shelter.name, typing: true })
+    }
+    if (user && message.length === 0) {
+        socket.emit('typing', { user: user.username, shelter: shelter.name, typing: false })
     }
 
     return (
@@ -128,7 +144,7 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.logOrReg1}>Login or register to comment</Text>
                         </TouchableOpacity></View> : null }
                             <Text style={styles.comments}>COMMENTS</Text>
-                        
+                            {someoneTyping && <Text style={styles.ital}>Someone is typing...</Text>}
                             <ScrollView style={styles.scrollView}>
                             
                             {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
@@ -136,7 +152,7 @@ const ShelterData = ({ history, location }) => {
                                     <View key={Math.random()}>
                                         <View style={styles.flexing}>
                                             <Text style={styles.commentUser}>{comment.user}</Text>
-                                            <Text style={styles.comment1}>Nov 2019</Text>
+                                            <Text style={styles.comment1}>Nov.11, 2019</Text>
                                         </View>
                                         <Text style={styles.comment}>{comment.message}</Text>
                                     </View> )
@@ -160,6 +176,11 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    ital: {
+        fontStyle: "italic",
+        fontSize: 14,
+        marginLeft: 30
+    },
     description: {
         marginTop: 20,
         marginLeft: 20,
