@@ -25,7 +25,6 @@ const ShelterData = ({ history, location }) => {
     const [ socketComments, setSocketComments ] = useState([]);
     const [ new1, setNew1 ] = useState(false);
     const [ someoneTyping, setSomeoneTyping ] = useState(false);
-    const [ whoseTyping, setWhoseTyping ] = useState('');
 
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
@@ -46,6 +45,8 @@ const ShelterData = ({ history, location }) => {
     useEffect(() => {
         if (showComments){
             connect()
+    } else {
+        setSomeoneTyping(false)
     }}, [showComments]);
 
     connect = () => {
@@ -55,21 +56,13 @@ const ShelterData = ({ history, location }) => {
                 newSocketComments.unshift(msg);
                 setSocketComments(newSocketComments)
                 setSomeoneTyping(false);
-                setWhoseTyping('');
                 rerun();
             })
             socket.on(`${shelter.name}/typing`, (msg) => {
-                if (msg.user === whoseTyping && msg.typing === false){
-                    setSomeoneTyping(false);
-                    setWhoseTyping('');
-                    rerun();
-                }
                 if (!user && msg.typing) {
                     setSomeoneTyping(true);
-                    setWhoseTyping(msg.user)
                 } else if (msg.user !== user.username && msg.typing){
                     setSomeoneTyping(true);
-                    setWhoseTyping(msg.user)
                 }
             })}
 
@@ -93,7 +86,6 @@ const ShelterData = ({ history, location }) => {
     if (user && message.length === 0) {
         socket.emit('typing', { user: user.username, shelter: shelter.name, typing: false })
     }
-    console.log(' here is whoseTyping ', whoseTyping)
 
     return (
         <View style={styles.page}>
