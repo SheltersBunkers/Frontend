@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
-import date from './date.js'
-
+// import date from './date.js'
+import moment from 'moment';
 import socketIO from 'socket.io-client';
 
 
@@ -45,9 +45,9 @@ const ShelterData = ({ history, location }) => {
     useEffect(() => {
         if (showComments){
             connect()
-    } else {
-        setSomeoneTyping(false)
-    }}, [showComments]);
+        } else {
+            setSomeoneTyping(false)
+        }}, [showComments]);
 
     connect = () => {
         socket.connect();
@@ -69,7 +69,7 @@ const ShelterData = ({ history, location }) => {
     sendComment = () => {
         if (message !== ''){
             dispatch(post_comment_to_shelter(shelter.id, message, user.id));
-            socket.emit('shelter', { user: user.username, message: message, shelter: shelter.name });
+            socket.emit('shelter', { user: user.username, message: message, shelter: shelter.name, time: Date.now() });
             setMessage('')
             
         }
@@ -152,7 +152,7 @@ const ShelterData = ({ history, location }) => {
                                     <View key={Math.random()}>
                                         <View style={styles.flexing}>
                                             <Text style={styles.commentUser}>{comment.user}</Text>
-                                            <Text style={styles.comment1}>Nov.11, 2019</Text>
+                                            <Text style={styles.comment1}>{moment(moment.utc(comment.time).toDate()).local().format('LLL')}</Text>
                                         </View>
                                         <Text style={styles.comment}>{comment.message}</Text>
                                     </View> )
@@ -162,7 +162,8 @@ const ShelterData = ({ history, location }) => {
                                     <View key={comment.id}>
                                         <View style={styles.flexing}>
                                             <Text style={styles.commentUser}>{comment.username}</Text>
-                                            <Text style={styles.comment1}>{date(comment.posted_at)}</Text>
+                                            <Text style={styles.comment1}>{moment(moment.utc(comment.posted_at).toDate()).local().format('LLL')}</Text>
+                                            {/* <Text style={styles.comment1}>{moment('2016-01-01T23:35:01')}</Text> */}
                                         </View>
                                         <Text style={styles.comment}>{comment.comment}</Text>
                                     </View> )
