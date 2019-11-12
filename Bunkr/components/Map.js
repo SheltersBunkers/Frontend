@@ -66,11 +66,12 @@ const Map = ({ history }) => {
         setSelectedShelter(shelter);
 
     }
-
+    if (locations.length === 0){
+        return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+    }
     return (
        
         <View>
-        {/* <Button onPress={() => history.push("/")} title="Go Back" /> */}
         {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code, your_lat: where.lat, your_lng: where.lng, description: selectedShelter.description || null }) :  
         (where.lat && where.lng) ?
             <MapView
