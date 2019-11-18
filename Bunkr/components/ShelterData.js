@@ -25,6 +25,7 @@ const ShelterData = ({ history, location }) => {
     const [ socketComments, setSocketComments ] = useState([]);
     const [ new1, setNew1 ] = useState(false);
     const [ someoneTyping, setSomeoneTyping ] = useState(false);
+    const [ whoseTyping, setWhoseTyping ] = useState([]);
 
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
@@ -59,12 +60,16 @@ const ShelterData = ({ history, location }) => {
                 rerun();
             })
             socket.on(`${shelter.name}/typing`, (msg) => {
+            
                 if (!user && msg.typing) {
-                    setSomeoneTyping(true);
-                } else if (msg.user !== user.username && msg.typing){
-                    setSomeoneTyping(true);
+                        setSomeoneTyping(true)
+                } else if (user) {
+                    if (msg.user !== user.username && msg.typing){
+                        setSomeoneTyping(true);
+                    }
                 }
-            })}
+                })
+            }
 
     sendComment = () => {
         if (message !== ''){
@@ -86,7 +91,6 @@ const ShelterData = ({ history, location }) => {
     if (user && message.length === 0) {
         socket.emit('typing', { user: user.username, shelter: shelter.name, typing: false })
     }
-
     return (
         <View style={styles.page}>
                 <View style={styles.map} pointerEvents="none"> 
@@ -144,7 +148,7 @@ const ShelterData = ({ history, location }) => {
                             <Text style={styles.logOrReg1}>Login or register to comment</Text>
                         </TouchableOpacity></View> : null }
                             <Text style={styles.comments}>COMMENTS</Text>
-                            {someoneTyping && <Text style={styles.ital}>Someone is typing...</Text>}
+                            {(someoneTyping)  && <Text style={styles.ital}>Someone is typing...</Text>}
                             <ScrollView style={styles.scrollView}>
                             
                             {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
@@ -163,7 +167,6 @@ const ShelterData = ({ history, location }) => {
                                         <View style={styles.flexing}>
                                             <Text style={styles.commentUser}>{comment.username}</Text>
                                             <Text style={styles.comment1}>{moment(moment.utc(comment.posted_at).toDate()).local().format('LLL')}</Text>
-                                            {/* <Text style={styles.comment1}>{moment('2016-01-01T23:35:01')}</Text> */}
                                         </View>
                                         <Text style={styles.comment}>{comment.comment}</Text>
                                     </View> )
@@ -199,7 +202,7 @@ const styles =  StyleSheet.create({
         position: "absolute",
         right: 10,
         fontWeight: "bold",
-        fontSize: 15
+        fontSize: 10
     },
     comment: {
         fontSize: 18,
@@ -219,7 +222,7 @@ const styles =  StyleSheet.create({
         paddingTop: Platform.OS === "ios" ? 3 : 0
     },
     commentUser: {
-        fontSize: 15,
+        fontSize: 12,
         color:"#3366CC",
         marginLeft: 10,
         fontWeight: "bold"
