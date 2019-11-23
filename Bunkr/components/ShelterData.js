@@ -128,7 +128,7 @@ const ShelterData = ({ history, location }) => {
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
                         </TouchableOpacity>
-                        { shelter.description && <Text style={styles.description}>{shelter.description}</Text> }
+                        { shelter.description ? <Text style={styles.description}>{shelter.description}</Text> : <Text>Some shelters only provide access to residents of that community and may not be open.</Text>}
                 </View> : 
                 <View>
                     { user && 
@@ -202,7 +202,7 @@ const styles =  StyleSheet.create({
         position: "absolute",
         right: 10,
         fontWeight: "bold",
-        fontSize: 10
+        fontSize: 12
     },
     comment: {
         fontSize: 18,
@@ -222,7 +222,7 @@ const styles =  StyleSheet.create({
         paddingTop: Platform.OS === "ios" ? 3 : 0
     },
     commentUser: {
-        fontSize: 12,
+        fontSize: 14,
         color:"#3366CC",
         marginLeft: 10,
         fontWeight: "bold"
