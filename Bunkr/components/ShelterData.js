@@ -128,7 +128,7 @@ const ShelterData = ({ history, location }) => {
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
                         </TouchableOpacity>
-                        { shelter.description ? <Text style={styles.description}>{shelter.description}</Text> : <Text>Some shelters only provide access to residents of that community and may not be open.</Text>}
+                        { shelter.description ? <Text style={styles.description}>{shelter.description}</Text> : <Text>Some shelters may NOT be open to the public.</Text>}
                 </View> : 
                 <View>
                     { user && 
