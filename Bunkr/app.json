@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Bunkr",
-    "slug": "Bunkr",
+    "name": "Dorothy's Bunker",
+    "slug": "dorothysbunker",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Dorothy's Bunker aim is to provide users with locations of storm shelters in order to allow them to take shelter before severe storms approach.  We want users to be provided with information and other resources that can be easily accessible so they can keep themselves and their family safe.  "
   }
 }
