@@ -69,7 +69,6 @@ const Map = ({ history }) => {
     if (locations.length === 0){
         return <View><ActivityIndicator size="large" color="#0000ff" /></View>
     }
-    console.log(locations.length)
     return (
        
         <View>
