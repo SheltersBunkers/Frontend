@@ -128,7 +128,7 @@ const ShelterData = ({ history, location }) => {
                         <TouchableOpacity onPress={() => history.push('/')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Home</Text>
                         </TouchableOpacity>
-                        { shelter.description ? <Text style={styles.description}>{shelter.description}</Text> : <Text>Some shelters may NOT be open to the public.</Text>}
+                        { shelter.description ? <Text style={styles.notice}>{shelter.description}</Text> : <Text style={styles.notice}>Some shelters may NOT be open to the public.</Text>}
                 </View> : 
                 <View>
                     { user && 
@@ -151,7 +151,7 @@ const ShelterData = ({ history, location }) => {
                             {(someoneTyping)  && <Text style={styles.ital}>Someone is typing...</Text>}
                             <ScrollView style={styles.scrollView}>
                             
-                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
+                            {(shelterComments.length === 0 && socketComments === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
                                 return ( 
                                     <View key={Math.random()}>
                                         <View style={styles.flexing}>
@@ -180,6 +180,11 @@ const ShelterData = ({ history, location }) => {
 
 
 const styles =  StyleSheet.create({
+    notice: {
+        marginLeft: 20,
+        marginRight: 20,
+        fontWeight: "bold"
+    },
     ital: {
         fontStyle: "italic",
         fontSize: 14,

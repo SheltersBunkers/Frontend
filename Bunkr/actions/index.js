@@ -79,6 +79,7 @@ export const register = (history, user, shelter) => dispatch => {
     })
     .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
     .catch(err => {
+        console.log(err, 'error registering')
         dispatch({ type: REGISTERING_FAILURE, payload: err })
     })
 }
