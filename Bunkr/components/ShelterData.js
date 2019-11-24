@@ -151,7 +151,7 @@ const ShelterData = ({ history, location }) => {
                             {(someoneTyping)  && <Text style={styles.ital}>Someone is typing...</Text>}
                             <ScrollView style={styles.scrollView}>
                             
-                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
+                            {(shelterComments.length === 0 && socketComments === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
                                 return ( 
                                     <View key={Math.random()}>
                                         <View style={styles.flexing}>
