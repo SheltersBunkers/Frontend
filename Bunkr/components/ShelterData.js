@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-native';
 import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
-// import date from './date.js'
 import moment from 'moment';
 import socketIO from 'socket.io-client';
 
