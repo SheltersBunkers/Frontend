@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, ActivityIndicator, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native';
 import { useSelector, useDispatch }  from 'react-redux';
-import {AsyncStorage} from 'react-native';
 import tornado from '../assets/tornado.png';
 import { verify_token } from '../actions'
 
