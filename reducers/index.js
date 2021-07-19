@@ -22,7 +22,8 @@ import {
     VERIFY_TOKEN_FAILED,
     CHANGE_REPSONSE,
     SET_SELECTED_SHELTER,
-    SET_SELECTED_SHELTER_NULL
+    SET_SELECTED_SHELTER_NULL,
+    SET_USER_LOCATION
 } from '../actions/index.js';
 
 
@@ -41,7 +42,14 @@ const initialState = {
     regFailure: null,
     sendingFeedback: false,
     feedbackResponse: null, 
-    shelter: null
+    shelter: null,
+    user_location: {
+        coords: {
+            latitude: 37.34,
+            longitude: -95.25
+        }  
+    },
+    permissions: null
 }
 
 export default reducer = (state = initialState, action) => {
@@ -180,6 +188,12 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 shelter: null
+            }
+        case SET_USER_LOCATION:
+            return {
+                ...state,
+                user_location: action.payload,
+                permissions: 'granted'
             }
         default:
             return state

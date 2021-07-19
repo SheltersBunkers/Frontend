@@ -37,7 +37,9 @@ export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
 export const CHANGE_REPSONSE = "CHANGE_REPSONSE";
 
 export const SET_SELECTED_SHELTER = "SET_SELECTED_SHELTER";
-export const SET_SELECTED_SHELTER_NULL = "SET_SELECTED_SHELTER_NULL"
+export const SET_SELECTED_SHELTER_NULL = "SET_SELECTED_SHELTER_NULL";
+
+export const SET_USER_LOCATION = "SET_USER_LOCATION";
 
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
@@ -205,11 +207,16 @@ export const selected_shelter = (shelter, history) => dispatch =>{
     history.push('/shelter');
 }
 
-export const mainMap = ({ history }) => dispatch =>{
-    dispatch({ SET_SELECTED_SHELTER_NULL });
-    history.push('/login');
+export const main_map = ( history ) => dispatch =>{
+    dispatch({ type: SET_SELECTED_SHELTER_NULL });
+    history.push('/map');
 }
 
 export const changeResponse = () => dispatch => {
     dispatch({ type: CHANGE_REPSONSE })
+}
+
+export const set_user_local = (location) => dispatch => {
+    console.log(location);
+    dispatch({ type: SET_USER_LOCATION, payload: location })
 }

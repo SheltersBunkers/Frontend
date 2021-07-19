@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { withRouter } from 'react-router-native';
-import { post_comment_to_shelter, get_comments_by_id } from '../actions';
+import { post_comment_to_shelter, get_comments_by_id, main_map } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import moment from 'moment';
 import socketIO from 'socket.io-client';
@@ -110,7 +110,7 @@ const ShelterData = ({ history, location }) => {
                     </MapView> 
                 </View>
                 <View style={styles.container}>
-                <TouchableOpacity onPress={(showComments) ? () => setShowComments(!showComments) : () => dispatch(mainMap())} style={styles.close}>
+                <TouchableOpacity onPress={(showComments) ? () => setShowComments(!showComments) : () => dispatch(main_map(history))} style={styles.close}>
                             <Text style={styles.closeText}>X</Text>
                 </TouchableOpacity>
                 {(!showComments) ?
