@@ -20,7 +20,8 @@ import {
     VERIFYING,
     VERIFY_TOKEN_SUCCESS,
     VERIFY_TOKEN_FAILED,
-    CHANGE_REPSONSE
+    CHANGE_REPSONSE,
+    SET_SELECTED_SHELTER
 } from '../actions/index.js';
 
 
@@ -38,7 +39,8 @@ const initialState = {
     errors: null,
     regFailure: null,
     sendingFeedback: false,
-    feedbackResponse: null
+    feedbackResponse: null, 
+    shelter: null
 }
 
 export default reducer = (state = initialState, action) => {
@@ -167,6 +169,11 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 feedbackResponse: null
+            }
+        case SET_SELECTED_SHELTER:
+            return {
+                ...state,
+                shelter: action.payload
             }
         default:
             return state

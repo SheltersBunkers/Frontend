@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "expo": "~42.0.1",
     "expo-cli": "^4.8.1",
+    "expo-location": "~12.1.2",
     "expo-status-bar": "~1.0.4",
     "formik": "^2.2.9",
     "geolib": "^3.3.1",

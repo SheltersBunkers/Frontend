@@ -4,7 +4,6 @@ import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import  Map  from './Map';
 import { withRouter } from 'react-router-native';
-import { getDistance } from 'geolib';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import moment from 'moment';
@@ -14,28 +13,31 @@ import socketIO from 'socket.io-client';
 
 const ShelterData = ({ history, location }) => {
     const [ distance, setDistance ] = useState(null);
-    const shelter = location.state;
     const [ message, setMessage ] = useState('');
-    const dispatch = useDispatch();
-    const user = useSelector( state => state.user);
-    const shelterComments = useSelector( state => state.comments );
-    const failed = useSelector( state => state.postFailed )
     const [ showComments, setShowComments ] = useState(false);
     const [ socketComments, setSocketComments ] = useState([]);
     const [ new1, setNew1 ] = useState(false);
     const [ someoneTyping, setSomeoneTyping ] = useState(false);
     const [ whoseTyping, setWhoseTyping ] = useState([]);
 
+    const dispatch = useDispatch();
+
+    const user = useSelector( state => state.user);
+    const shelterComments = useSelector( state => state.comments );
+    const failed = useSelector( state => state.postFailed );
+    const shelter = useSelector( state => state.shelter);
+   
+
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
 
-    useEffect(() => {
-        setDistance(getDistance(
-            {latitude: shelter.lat, longitude: shelter.lng },
-            {latitude: shelter.your_lat, longitude: shelter.your_lng }
-        ) * 0.00062137)
+    // useEffect(() => {
+    //     setDistance(getDistance(
+    //         {latitude: shelter.lat, longitude: shelter.lng },
+    //         {latitude: shelter.your_lat, longitude: shelter.your_lng }
+    //     ) * 0.00062137)
 
-    }, [])
+    // }, [])
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id));
@@ -118,7 +120,7 @@ const ShelterData = ({ history, location }) => {
                     <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
                     { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> }
                     {(!user) &&
-                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng, description: shelter.description })} style={styles.madeButton}>
+                        <TouchableOpacity onPress={() => history.push('/login')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Login or register to comment</Text>
                         </TouchableOpacity>} 
                         <TouchableOpacity onPress={() => setShowComments(!showComments)} style={styles.madeButton}>
@@ -143,7 +145,7 @@ const ShelterData = ({ history, location }) => {
                         </TouchableOpacity>  
                         </View> }
                         {(!user) ? <View> 
-                        <TouchableOpacity onPress={() => history.push('/login', {id: shelter.id, name: shelter.name, lat: shelter.lat, lng: shelter.lng, street_num: shelter.street_num, road: shelter.road, city: shelter.city, state: shelter.state, zip_code: shelter.zip_code, your_lat: shelter.your_lat, your_lng: shelter.your_lng }) }>
+                        <TouchableOpacity onPress={() => history.push('/login')}>
                             <Text style={styles.logOrReg1}>Login or register to comment</Text>
                         </TouchableOpacity></View> : null }
                             <Text style={styles.comments}>COMMENTS</Text>

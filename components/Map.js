@@ -4,31 +4,32 @@ import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
 import { get_locations, ddropUserropUser } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
-import bunker from '../assets/bunker.png';
+import * as Location from 'expo-location';
 
 const Map = ({ history }) => {
-    const [ selectedShelter, setSelectedShelter ] = useState(null);
     const [ ready, setReady ] = useState(false);
-    const [ where, setWhere ] = useState({
-        lat: null,
-        lng: null
-    });
-    const [ error, setError ] = useState(null);
+    const [userLocation, setUserLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
     const [ showShelter, setShowShelter ] = useState(false);
-    const locations = useSelector(state => state.locations);
+    // const locations = useSelector(state => state.locations);
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
 
+
+
     useEffect(() => {
-        let geoOptions={
-            enableHighAccuracy: true,
-            timeOut: 20000,
-            maximumAge: 20 
-        };
-        setReady(false)
-        setError(null)
-        navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
-    }, []);
+        (async () => {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+          }
+    
+          let location = await Location.getCurrentPositionAsync({});
+          setUserLocation(location);
+        })();
+      }, []);
+    
 
     useEffect(() => {
         dispatch(get_locations())
@@ -54,37 +55,31 @@ const Map = ({ history }) => {
         navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
     }
 
-    geoSuccess = (position) => {
-        setReady(true)
-        setWhere({ lat: position.coords.latitude, lng: position.coords.longitude })
-
-    }
-    geoFailure = (err) => {
-        setError(true)
-    }
+    
     showIndividualShelter = (shelter) => {
-        setSelectedShelter(shelter);
+       dispatch(selectedShelter(shelter));
 
     }
     if (locations.length === 0){
         return <View><ActivityIndicator size="large" color="#0000ff" /></View>
     }
+    console.log(userLocation)
     return (
        
         <View>
-        {(selectedShelter) ? history.push('/shelter', {id: selectedShelter.id, name: selectedShelter.name, lat: selectedShelter.lat, lng: selectedShelter.lng, street_num: selectedShelter.street_num, road: selectedShelter.road, city: selectedShelter.city, state: selectedShelter.state, zip_code: selectedShelter.zip_code, your_lat: where.lat, your_lng: where.lng, description: selectedShelter.description || null }) :  
-        (where.lat && where.lng) ?
+        {(selectedShelter) && history.push('/shelter')}
+        (userLocation.longitude && userLocation.latitude) ?
             <MapView
                 style={styles.map}
                 initialRegion={{
-                latitude: where.lat,
-                longitude: where.lng,
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
                 }}
             >
             <Marker 
-                coordinate={{latitude: where.lat, longitude: where.lng}}
+                coordinate={{latitude: userLocation.latitude, longitude: userLocation.longitude}}
                 title="Your Location" />
            {locations.map(marker => (
                 <Marker

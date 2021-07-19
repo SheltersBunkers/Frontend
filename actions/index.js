@@ -36,6 +36,9 @@ export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
 export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
 export const CHANGE_REPSONSE = "CHANGE_REPSONSE";
 
+export const SET_SELECTED_SHELTER = "SET_SELECTED_SHELTER";
+
+
 export const login = (history, user, shelter) => dispatch => {
     dispatch({ type: LOGIN })
 
@@ -195,6 +198,10 @@ export const verify_token = (user) => dispatch => {
     
 
    
+}
+
+export const selectedShelter = (shelter) => {
+    dispatch({ type: SET_SELECTED_SHELTER, payload: shelter})
 }
 
 export const changeResponse = () => dispatch => {
