@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
 // import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
-import { get_locations, ddropUserropUser } from '../actions'
+import { get_locations, selected_shelter } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
 import * as Location from 'expo-location';
 
 const Map = ({ history }) => {
     const [ ready, setReady ] = useState(false);
-    const [userLocation, setUserLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+    const [ userLocation, setUserLocation ] = useState(null);
+    const [ errorMsg, setErrorMsg ] = useState(null);
     const [ showShelter, setShowShelter ] = useState(false);
-    // const locations = useSelector(state => state.locations);
-
+    
     const dispatch = useDispatch();
 
+    const locations = useSelector(state => state.locations);
     const user = useSelector(state => state.user);
+    const selectedShelter = useSelector(state => state.shelter);
 
 
 
@@ -48,29 +49,29 @@ const Map = ({ history }) => {
 
     
     showIndividualShelter = (shelter) => {
-       dispatch(selectedShelter(shelter));
+      dispatch(selected_shelter(shelter, history));
 
     }
     if (locations.length === 0){
         return <View><ActivityIndicator size="large" color="#0000ff" /></View>
     }
-    console.log(userLocation)
+    
+    console.log(selectedShelter)
     return (
        
         <View>
-        {(selectedShelter) && history.push('/shelter')}
-        (userLocation.longitude && userLocation.latitude) ?
+        {(userLocation.coords.latitude && userLocation.coords.longitude) ?
             <MapView
                 style={styles.map}
                 initialRegion={{
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude,
+                latitude: userLocation.coords.latitude,
+                longitude: userLocation.coords.longitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
                 }}
-            >
+            > 
             <Marker 
-                coordinate={{latitude: userLocation.latitude, longitude: userLocation.longitude}}
+                coordinate={{latitude: userLocation.coords.latitude, longitude: userLocation.coords.longitude}}
                 title="Your Location" />
            {locations.map(marker => (
                 <Marker

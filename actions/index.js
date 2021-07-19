@@ -200,13 +200,14 @@ export const verify_token = (user) => dispatch => {
    
 }
 
-export const selectedShelter = (shelter) => {
-    dispatch({ type: SET_SELECTED_SHELTER, payload: shelter})
+export const selected_shelter = (shelter, history) => dispatch =>{
+    dispatch({ type: SET_SELECTED_SHELTER, payload: shelter});
+    history.push('/shelter');
 }
 
-export const mainMap = ({ history }) => {
+export const mainMap = ({ history }) => dispatch =>{
     dispatch({ SET_SELECTED_SHELTER_NULL });
-    history.push('/map');
+    history.push('/login');
 }
 
 export const changeResponse = () => dispatch => {
