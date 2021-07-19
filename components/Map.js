@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
-import locations from './data'; //a few locations to map over.
+// import locations from './data'; //a few locations to map over.
 import MapView, { Marker } from 'react-native-maps';
 import { get_locations, ddropUserropUser } from '../actions'
 import { useSelector, useDispatch }  from 'react-redux';
@@ -33,9 +33,9 @@ const Map = ({ history }) => {
       }, []);
     
 
-    // useEffect(() => {
-    //     dispatch(get_locations())
-    // }, [])
+    useEffect(() => {
+        dispatch(get_locations())
+    }, [])
 
     useEffect(() =>{
         if (user) {
