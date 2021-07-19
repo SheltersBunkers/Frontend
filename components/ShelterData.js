@@ -109,7 +109,7 @@ const ShelterData = ({ history, location }) => {
                     </MapView> 
                 </View>
                 <View style={styles.container}>
-                <TouchableOpacity onPress={(showComments) ? () => setShowComments(!showComments) : () => history.push('/map')} style={styles.close}>
+                <TouchableOpacity onPress={(showComments) ? () => setShowComments(!showComments) : () => dispatch(mainMap())} style={styles.close}>
                             <Text style={styles.closeText}>X</Text>
                 </TouchableOpacity>
                 {(!showComments) ?

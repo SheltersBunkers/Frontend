@@ -21,7 +21,8 @@ import {
     VERIFY_TOKEN_SUCCESS,
     VERIFY_TOKEN_FAILED,
     CHANGE_REPSONSE,
-    SET_SELECTED_SHELTER
+    SET_SELECTED_SHELTER,
+    SET_SELECTED_SHELTER_NULL
 } from '../actions/index.js';
 
 
@@ -174,6 +175,11 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 shelter: action.payload
+            }
+        case SET_SELECTED_SHELTER_NULL:
+            return {
+                ...state,
+                shelter: null
             }
         default:
             return state
