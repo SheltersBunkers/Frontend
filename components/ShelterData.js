@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Ionicons } from '@expo/vector-icons';
-import  Map  from './Map';
 import { withRouter } from 'react-router-native';
 import { post_comment_to_shelter, get_comments_by_id } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
@@ -31,13 +29,13 @@ const ShelterData = ({ history, location }) => {
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
 
-    // useEffect(() => {
-    //     setDistance(getDistance(
-    //         {latitude: shelter.lat, longitude: shelter.lng },
-    //         {latitude: shelter.your_lat, longitude: shelter.your_lng }
-    //     ) * 0.00062137)
+    useEffect(() => {
+        setDistance(getDistance(
+            {latitude: shelter.lat, longitude: shelter.lng },
+            {latitude: shelter.your_lat, longitude: shelter.your_lng }
+        ) * 0.00062137)
 
-    // }, [])
+    }, [])
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id));

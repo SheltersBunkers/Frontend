@@ -12,7 +12,9 @@ const Map = ({ history }) => {
     const [errorMsg, setErrorMsg] = useState(null);
     const [ showShelter, setShowShelter ] = useState(false);
     // const locations = useSelector(state => state.locations);
+
     const dispatch = useDispatch();
+
     const user = useSelector(state => state.user);
 
 
@@ -31,9 +33,9 @@ const Map = ({ history }) => {
       }, []);
     
 
-    useEffect(() => {
-        dispatch(get_locations())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(get_locations())
+    // }, [])
 
     useEffect(() =>{
         if (user) {
@@ -43,17 +45,6 @@ const Map = ({ history }) => {
         }
         
     })
-
-    callGeo = () => { //going to use to call ever so often to get location update.// escpecially if speed is greater than 1.
-        let geoOptions={
-            enableHighAccuracy: true,
-            timeOut: 20000,
-            maximumAge: 20 //since they would be moving would need to grab constantly so every 30 seconds.
-        }
-        setReady(false)
-        setError(null)
-        navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions);
-    }
 
     
     showIndividualShelter = (shelter) => {

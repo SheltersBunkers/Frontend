@@ -18,6 +18,7 @@ const validationSchema = yup.object().shape({
 
 const Register = ({ history, location }) => {
     const dispatch = useDispatch();
+    
     const registering = useSelector(state => state.registering);
     const regFailure = useSelector(state => state.regFailure);
 

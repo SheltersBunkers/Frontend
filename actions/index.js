@@ -55,7 +55,7 @@ export const login = (history, user, shelter) => dispatch => {
         saved();
         
     })
-    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
+    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter'))
     .catch(err => {
         dispatch({ type: LOGIN_FAILURE, payload: "Username or password is incorrect" })
     })
@@ -80,7 +80,7 @@ export const register = (history, user, shelter) => dispatch => {
         
         
     })
-    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter', shelter))
+    .then(res => (!shelter) ? history.push('/map') : history.push('/shelter'))
     .catch(err => {
         console.log(err, 'error registering')
         dispatch({ type: REGISTERING_FAILURE, payload: err })

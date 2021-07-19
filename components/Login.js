@@ -11,12 +11,12 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Password').min(6, 'Minimum 6 characters').max(20, 'Maximum 20 characters'),
 })
 
-const Login = ({ history, location }) => {
+const Login = ({ history }) => {
     const dispatch = useDispatch();
+
     const userError = useSelector(state => state.errors);
     const loggingIn = useSelector(state => state.loggingIn);
-
-    const shelter = location.state;
+    const shelter = useSelector(state => state.shelter);
 
     return (
         <View style={styles.page}>
