@@ -3,8 +3,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://z8-bh5.toddmckenzie.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.z8-bh5.toddmckenzie.frontend.exp.direct",
+  "ngrokPid": 44827,
   "webpackServerPort": null
 }

@@ -10,13 +10,9 @@ import socketIO from 'socket.io-client';
 
 
 const ShelterData = ({ history }) => {
-    const [ distance, setDistance ] = useState(null);
     const [ message, setMessage ] = useState('');
     const [ showComments, setShowComments ] = useState(false);
-    const [ socketComments, setSocketComments ] = useState([]);
-    const [ new1, setNew1 ] = useState(false);
     const [ someoneTyping, setSomeoneTyping ] = useState(false);
-    const [ whoseTyping, setWhoseTyping ] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -30,7 +26,6 @@ const ShelterData = ({ history }) => {
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id));
-        setSocketComments([]);
     }, [failed, showComments]);
 
     useEffect(() => {
@@ -43,11 +38,8 @@ const ShelterData = ({ history }) => {
     connect = () => {
         socket.connect();
             socket.on(`${shelter.name}`, (msg) => {
-                let newSocketComments = socketComments;
-                newSocketComments.unshift(msg);
-                setSocketComments(newSocketComments)
+                dispatch(get_comments_by_id(shelter.id))
                 setSomeoneTyping(false);
-                rerun();
             })
             socket.on(`${shelter.name}/typing`, (msg) => {
             
@@ -71,10 +63,6 @@ const ShelterData = ({ history }) => {
         
     }
 
-    rerun = () => { //put in to toggle state and rerender when using socketio cause comments weren't always rendering to screen when they should have been cause state was changing.
-        setNew1(true);
-        setNew1(false);
-    }
     if (message.length > 0){
         socket.emit('typing', { user: user.username, shelter: shelter.name, typing: true })
     }
@@ -141,16 +129,7 @@ const ShelterData = ({ history }) => {
                             {(someoneTyping)  && <Text style={styles.ital}>Someone is typing...</Text>}
                             <ScrollView style={styles.scrollView}>
                             
-                            {(shelterComments.length === 0 && socketComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}{socketComments.length > 0 && socketComments.map(comment => {
-                                return ( 
-                                    <View key={Math.random()}>
-                                        <View style={styles.flexing}>
-                                            <Text style={styles.commentUser}>{comment.user}</Text>
-                                            <Text style={styles.comment1}>{moment(moment.utc(comment.time).toDate()).local().format('LLL')}</Text>
-                                        </View>
-                                        <Text style={styles.comment}>{comment.message}</Text>
-                                    </View> )
-                            })}
+                            {(shelterComments.length === 0) && <Text style={styles.first}>Be the first to comment on this Shelter</Text>}
                                  {shelterComments.map(comment => {
                                     return (
                                     <View key={comment.id}>
