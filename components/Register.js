@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
-import { Link } from 'react-router';
-import { login, register } from '../actions';
+import React from 'react';
+import {StyleSheet, View, Text, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
+import { register } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
