@@ -6,15 +6,13 @@ import { useSelector, useDispatch }  from 'react-redux';
 import * as Location from 'expo-location';
 
 const Map = ({ history }) => {
-    const [ ready, setReady ] = useState(false);
     const [ errorMsg, setErrorMsg ] = useState(null);
-    const [ showShelter, setShowShelter ] = useState(false);
+    const [ needUserLocation, setNeedUserLocation ] = useState(true);
     
     const dispatch = useDispatch();
 
     const locations = useSelector(state => state.locations);
     const user = useSelector(state => state.user);
-    const selectedShelter = useSelector(state => state.shelter);
     const user_location = useSelector(state => state.user_location);
     const user_granted_permission = useSelector(state => state.permissions)
 
@@ -58,6 +56,11 @@ const Map = ({ history }) => {
 
     if (errorMsg){
       return <View>{errorMsg}</View>
+    }
+
+    if ( user_location.coords.latitude === 37.34 && user_location.coords.longitude === -95.25 && user_granted_permission === 'granted') {
+      console.log('inside need users location.....')
+      setNeedUserLocation(!needUserLocation);
     }
     
     return (

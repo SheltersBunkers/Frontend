@@ -9,7 +9,7 @@ import socketIO from 'socket.io-client';
 
 
 
-const ShelterData = ({ history, location }) => {
+const ShelterData = ({ history }) => {
     const [ distance, setDistance ] = useState(null);
     const [ message, setMessage ] = useState('');
     const [ showComments, setShowComments ] = useState(false);
