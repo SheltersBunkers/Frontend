@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ActivityIndicator, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native';
 import { useSelector, useDispatch }  from 'react-redux';
 import tornado from '../assets/tornado.png';
 import { verify_token } from '../actions'
 
 
 const Home = ({ history }) => {
-    const [ toggle, setToggle ] = useState(false);
     const user = useSelector(state => state.user);
+
     const dispatch = useDispatch();
 
     useEffect(() => {

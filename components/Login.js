@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
-import { Link } from 'react-router-native';
+import React from 'react';
+import {StyleSheet, View, Text, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { login } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
 import { Formik } from 'formik';

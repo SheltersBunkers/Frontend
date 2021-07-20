@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator} from 'react-native';
-// import locations from './data'; //a few locations to map over.
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { get_locations, selected_shelter, set_user_local } from '../actions';
 import { useSelector, useDispatch }  from 'react-redux';
@@ -55,6 +54,10 @@ const Map = ({ history }) => {
     }
     if (locations.length === 0){
         return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+    }
+
+    if (errorMsg){
+      return <View>{errorMsg}</View>
     }
     
     return (

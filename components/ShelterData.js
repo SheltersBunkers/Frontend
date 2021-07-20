@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { withRouter } from 'react-router-native';
 import { post_comment_to_shelter, get_comments_by_id, main_map } from '../actions';
@@ -27,15 +27,6 @@ const ShelterData = ({ history, location }) => {
    
 
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
-    
-
-    // useEffect(() => {
-    //     setDistance(getDistance(
-    //         {latitude: shelter.lat, longitude: shelter.lng },
-    //         {latitude: shelter.your_lat, longitude: shelter.your_lng }
-    //     ) * 0.00062137)
-
-    // }, [])
     
     useEffect(() =>{
         dispatch(get_comments_by_id(shelter.id));
@@ -117,7 +108,6 @@ const ShelterData = ({ history, location }) => {
                 <View>
                     <Text style={styles.shelterName}>{shelter.name}</Text>
                     <Text style={styles.address}>{shelter.street_num} {shelter.road}, {shelter.city}, {shelter.state}</Text>
-                    {/* { (distance) ? <Text style={styles.distance}>  { Math.ceil(distance) } {(Math.ceil(distance) > 1) ? 'Miles Away' : 'Mile Away' }</Text> : <ActivityIndicator size="small" color="#0000ff" /> } */}
                     {(!user) &&
                         <TouchableOpacity onPress={() => history.push('/login')} style={styles.madeButton}>
                             <Text style={styles.logOrReg}>Login or register to comment</Text>

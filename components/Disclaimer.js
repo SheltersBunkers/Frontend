@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {StyleSheet, View, Text, Button, ActivityIndicator, TextInput, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 
 
 const Disclaimer = ({ history }) => {
