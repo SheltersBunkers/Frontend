@@ -129,6 +129,16 @@ export const post_comment_to_shelter = (id, message, userId) => dispatch => {
                 .post(`https://bunkr-up.herokuapp.com/comments/${id}`, messageObj)
                 .then(res => {
                     dispatch({ type: POST_TO_SHELTER_SUCCESS, payload: res.data })
+                    console.log(res.data);
+                })
+                .then(res => {
+                    axios.get(`https://bunkr-up.herokuapp.com/comments/${id}`)
+                    .then(res => {
+                        dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_SUCCESS, payload: res.data })
+                    })
+                    .catch(err =>{
+                        dispatch({ type: GET_COMMENTS_BY_SHELTER_ID_FAILURE, payload: err })
+                    })
                 })
                 .catch(err => {
                     dispatch({ type: POST_TO_SHELTER_FAILURE, payload: token })

@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 
-const validationSchema = yup.object().shape({
+const SignupSchema = yup.object().shape({
     username: yup.string().required('Username is a required field'),
     email: yup.string().required('Email is a required field').email(),
     password: yup.string().required('Password is a required field').min(6, 'Minimum 6 characters').max(20, 'Maximum 20 characters'),
@@ -30,23 +30,23 @@ const Register = ({ history, location }) => {
             <Text style={styles.reg1}>Bunker</Text>
          </View>
     <SafeAreaView style={styles.safe}>
-        <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
-        onSubmit={(values, actions) => dispatch(register(history, values, shelter))}
-        validationSchema={validationSchema}>
-            {formikProps => (
+        <Formik initialValues={{username: '', email: '', password: '', verifyPassword: ''}}  
+        onSubmit={(values) => dispatch(register(history, values, shelter))}
+        validationSchema={SignupSchema}>
+            {({ handleChange, handleBlur, handleSubmit, touched, errors}) => (
                 <>
                 { regFailure ? <Text>{regFailure}</Text> : null }
-                <TextInput  placeholder="Username" style={styles.input1} onChangeText={formikProps.handleChange('username')} onBlur={formikProps.handleBlur("username")} />
-                <Text style={styles.alert}>{formikProps.touched.username && formikProps.errors.username}</Text>
-                <TextInput  placeholder="Email" style={styles.input} onChangeText={formikProps.handleChange('email')} onBlur={formikProps.handleBlur("email")}  />
-                <Text style={styles.alert}>{formikProps.touched.email && formikProps.errors.email}</Text>
-                <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={formikProps.handleChange('password')} secureTextEntry onBlur={formikProps.handleBlur("password")}  />
-                <Text style={styles.alert}>{formikProps.touched.password && formikProps.errors.password}</Text>
-                <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={formikProps.handleChange('verifyPassword')} secureTextEntry onBlur={formikProps.handleBlur("verifyPassword")}  />
-                <Text style={styles.alert}>{formikProps.touched.verifyPassword &&  formikProps.errors.verifyPassword}</Text>
+                <TextInput  placeholder="Username" style={styles.input1} onChangeText={handleChange('username')} onBlur={handleBlur('username')}/>
+                <Text style={styles.alert}>{touched.username && errors.username}</Text>
+                <TextInput  placeholder="Email" style={styles.input} onChangeText={handleChange('email')} onBlur={handleBlur("email")}  />
+                <Text style={styles.alert}>{touched.email && errors.email}</Text>
+                <TextInput type="password" placeholder="Password" style={styles.input} onChangeText={handleChange('password')} secureTextEntry onBlur={handleBlur("password")}  />
+                <Text style={styles.alert}>{touched.password && errors.password}</Text>
+                <TextInput type="password" placeholder="Verify Password" style={styles.input} onChangeText={handleChange('verifyPassword')} secureTextEntry onBlur={handleBlur("verifyPassword")}  />
+                <Text style={styles.alert}>{touched.verifyPassword &&  errors.verifyPassword}</Text>
                 {registering ? 
                     <ActivityIndicator /> : 
-                    <TouchableOpacity onPress={formikProps.handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Sign up</Text></TouchableOpacity>}
+                    <TouchableOpacity onPress={handleSubmit} style={styles.madeButtons}><Text style={styles.center}>Sign up</Text></TouchableOpacity>}
                 </>
                 
             )}

@@ -25,7 +25,7 @@ const Login = ({ history }) => {
             </View>
             <SafeAreaView style={styles.safe}>
             
-            <Formik initialValue={{username: '', email: '', password: '', verifyPassword: ''}}  
+            <Formik initialValues={{username: '', email: '', password: '', verifyPassword: ''}}  
             onSubmit={(values, actions) => { dispatch(login(history, values, shelter))}}
             validationSchema={validationSchema}>
                 {formikProps => (

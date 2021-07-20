@@ -31,7 +31,7 @@ const ShelterFeedback = ({ history }) => {
             </View>
             <SafeAreaView style={styles.safe}>
             
-            <Formik initialValue={{shelterName: '', address: '', yourName: '', info: '', contactNum: ''}}  
+            <Formik initialValues={{shelterName: '', address: '', yourName: '', info: '', contactNum: ''}}  
             onSubmit={(values, actions) => { dispatch(send_feedback(values))}}
             validationSchema={validationSchema}>
                 {formikProps => (

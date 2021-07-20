@@ -59,14 +59,13 @@ const Map = ({ history }) => {
     }
 
     if ( user_location.coords.latitude === 37.34 && user_location.coords.longitude === -95.25 && user_granted_permission === 'granted') {
-      console.log('inside need users location.....')
       setNeedUserLocation(!needUserLocation);
     }
     
     return (
        
         <View>
-        {(user_location.coords.latitude && user_location.coords.longitude) ?
+        {(user_location.coords.latitude && user_location.coords.longitude && user_granted_permission === 'granted') ?
             <MapView
                 style={styles.map}
                 initialRegion={{
