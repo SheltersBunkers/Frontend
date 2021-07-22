@@ -39,8 +39,9 @@ const ShelterData = ({ history }) => {
         socket.connect();
             socket.on(`${shelter.name}`, (msg) => {
                 setSomeoneTyping(false);
-                dispatch(get_comments_by_id(shelter.id))
-                //possibly set a second delay in order to make sure backend is awake..
+                setTimeout(function(){ 
+                    dispatch(get_comments_by_id(shelter.id))
+                 }, 15000);
             })
             socket.on(`${shelter.name}/typing`, (msg) => {
             
