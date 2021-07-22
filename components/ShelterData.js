@@ -41,7 +41,7 @@ const ShelterData = ({ history }) => {
                 setSomeoneTyping(false);
                 setTimeout(function(){ 
                     dispatch(get_comments_by_id(shelter.id))
-                 }, 15000);
+                 }, 8000);
             })
             socket.on(`${shelter.name}/typing`, (msg) => {
             
