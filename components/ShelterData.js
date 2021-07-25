@@ -8,7 +8,6 @@ import moment from 'moment';
 import socketIO from 'socket.io-client';
 
 
-
 const ShelterData = ({ history }) => {
     const [ message, setMessage ] = useState('');
     const [ showComments, setShowComments ] = useState(false);
