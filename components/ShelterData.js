@@ -19,7 +19,6 @@ const ShelterData = ({ history }) => {
     const shelterComments = useSelector( state => state.comments );
     const failed = useSelector( state => state.postFailed );
     const shelter = useSelector( state => state.shelter);
-   
 
     let socket = socketIO('https://bunkr-up-socketio.herokuapp.com/', { transports: ['websocket'], jsonp: false });
     
