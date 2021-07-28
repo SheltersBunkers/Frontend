@@ -208,8 +208,6 @@ export const verify_token = (user) => dispatch => {
     }
     tokes();
     
-
-   
 }
 
 export const selected_shelter = (shelter, history) => dispatch =>{
